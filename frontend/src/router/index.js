@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import OrgRegister from '@/views/OrgRegister.vue'
+import MemberRegister from "@/views/MemberRegister.vue";
 
 Vue.use(VueRouter)
 
@@ -23,6 +24,11 @@ const routes = [
     path: '/org-register',
     name: 'OrgRegister',
     component: OrgRegister
+  },
+  {
+    path: '/member-register',
+    name: 'MemberRegister',
+    component: MemberRegister
   }
 ]
 
