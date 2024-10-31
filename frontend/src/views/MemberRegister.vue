@@ -45,7 +45,7 @@
         <el-row :gutter="180">
           <!-- 第二行，三列 -->
           <el-col :span="8">
-            <div class="input-label">Github账号</div>
+            <div class="input-label">GitHub账号</div>
             <el-form-item>
               <el-input v-model="form.github" placeholder="账号"></el-input>
             </el-form-item>
