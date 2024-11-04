@@ -14,24 +14,25 @@
     </el-header>
 
     <el-main>
+      <!-- <el-form ref="form" :model="form" label-width="120px" @submit.prevent="submitForm"> -->
       <el-form ref="form" :model="form" label-width="120px">
         <el-row :gutter="20">
           <el-col :span="8">
             <el-form-item label="组织名称">
-              <el-input v-model="form.orgName" placeholder="名称"></el-input>
+              <el-input v-model="form.name" placeholder="名称"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="组织介绍">
               <el-input
-                v-model="form.introduction"
+                v-model="form.link"
                 placeholder="链接"
               ></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="联系邮箱">
-              <el-input v-model="form.email" placeholder="邮箱"></el-input>
+              <el-input v-model="form.contactEmail" placeholder="邮箱"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -39,7 +40,7 @@
         <el-row :gutter="20">
           <el-col :span="8">
             <el-form-item label="项目范围">
-              <el-select v-model="form.projectScope" placeholder="请选择">
+              <el-select v-model="form.category1" placeholder="请选择">
                 <el-option
                   label="国家重点发展项目"
                   value="国家重点发展项目"
@@ -49,7 +50,7 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="平台权限">
-              <el-select v-model="form.platformPermission" placeholder="请选择">
+              <el-select v-model="form.category2" placeholder="请选择">
                 <el-option
                   label="全球化模式：1:1:1"
                   value="全球化模式：1:1:1"
@@ -59,7 +60,7 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="评价模型">
-              <el-select v-model="form.model" placeholder="请选择">
+              <el-select v-model="form.category3" placeholder="请选择">
                 <el-option
                   label="工信部标准院标准：网络模型"
                   value="工信部标准院标准：网络模型"
@@ -90,7 +91,7 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="分析报告">
-              <el-select v-model="form.report" placeholder="请选择">
+              <el-select v-model="form.category4" placeholder="请选择">
                 <el-option label="普通版" value="普通版"></el-option>
               </el-select>
             </el-form-item>
@@ -100,7 +101,8 @@
         <el-row>
           <el-col :span="24" class="button-group">
             <el-button type="primary" plain>返回</el-button>
-            <el-button type="primary">完成注册</el-button>
+            <!-- <el-button type="primary" native-type="submit">完成注册</el-button> -->
+            <el-button type="primary" v-on:click="submitForm">完成注册</el-button>
           </el-col>
         </el-row>
       </el-form>
@@ -121,21 +123,40 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
       form: {
-        orgName: "",
-        introduction: "",
-        email: "",
-        projectScope: "",
-        platformPermission: "",
-        model: "",
+        name: "",
+        link: "",
+        contactEmail: "",
+        category1: "",
+        category2: "",
+        category3: "",
         startDate: "",
         endDate: "",
-        report: "",
+        category4: "",
       },
     };
+  },
+  methods: {
+    submitForm() {
+      // axios.post('/api/org/register', this.form)
+      // this.$http.post('http://localhost:8081/org/register', this.form)
+      this.$http.post("/org/register",this.form)
+        .then(response => {
+          console.log('注册成功', response.data);
+          // 可添加成功提示或执行其他操作
+          this.$message.success('注册成功！');
+        })
+        .catch(error => {
+          console.error('注册失败', error);
+          // 可添加错误提示或执行其他操作
+          this.$message.error('注册失败：' + error.message);
+        });
+    },
   },
 };
 </script>

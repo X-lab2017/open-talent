@@ -5,9 +5,9 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/openTalent?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&zeroDateTimeBehavior=convertToNull
+    url: jdbc:mysql://localhost:3306/opentalent?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&zeroDateTimeBehavior=convertToNull
     username: root
-    password: xxxxx
+    password: rootPassword
 
 server:
   port: 8081
