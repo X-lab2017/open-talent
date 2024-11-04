@@ -32,7 +32,7 @@ public class MemberController {
     }
 
     @GetMapping("/register/download")
-    public void registerDownliad(HttpServletResponse response) throws IOException {
+    public void registerDownload(HttpServletResponse response) throws IOException {
         String filePath = "/template.xlsx";
         try (InputStream inputStream = this.getClass().getResourceAsStream(filePath);
             OutputStream outputStream = response.getOutputStream()) {
@@ -40,7 +40,11 @@ public class MemberController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
 
+    @GetMapping("/getOrgName")
+    public BaseResponse getOrgName(){
+        return BaseResponse.success(memberServiceImpl.getOrgName());
     }
 
 }

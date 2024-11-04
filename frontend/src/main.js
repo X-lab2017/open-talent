@@ -4,7 +4,11 @@ import router from './router'
 import store from './store'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+import axios from "axios";
 
+axios.defaults.baseURL = '/api'
+
+Vue.prototype.$http=axios
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 
