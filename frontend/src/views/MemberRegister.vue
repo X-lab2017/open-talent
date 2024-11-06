@@ -16,18 +16,18 @@
 
     <div class="d1">
       <h3>成员注册</h3>
-      <el-form :model="form" label-position="left">
+      <el-form :model="form" :rules="rules" ref="form" label-position="left">
         <el-row :gutter="180">
           <!-- 第一行，三列 -->
           <el-col :span="8">
             <div class="input-label">姓名</div>
-            <el-form-item>
+            <el-form-item prop="name">
               <el-input v-model="form.name" placeholder="名字"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <div class="input-label">国家</div>
-            <el-form-item>
+            <el-form-item prop="nationality">
               <el-select v-model="form.nationality" filterable placeholder="选择国家">
                 <el-option
                     v-for="item in countrys"
@@ -40,7 +40,7 @@
           </el-col>
           <el-col :span="8">
             <div class="input-label">学校</div>
-            <el-form-item>
+            <el-form-item prop="organizationId">
               <el-select v-model="form.organizationId" filterable placeholder="学校">
                 <el-option
                     v-for="item in orgs"
@@ -57,19 +57,19 @@
           <!-- 第二行，三列 -->
           <el-col :span="8">
             <div class="input-label">GitHub账号</div>
-            <el-form-item>
+            <el-form-item prop="githubAccount">
               <el-input v-model="form.githubAccount" placeholder="账号"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <div class="input-label">Gitee账号</div>
-            <el-form-item>
+            <el-form-item prop="giteeAccount">
               <el-input v-model="form.giteeAccount" placeholder="账号"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <div class="input-label">AtomGit账号</div>
-            <el-form-item>
+            <el-form-item prop="atomgitAccount">
               <el-input v-model="form.atomgitAccount" placeholder="账号"></el-input>
             </el-form-item>
           </el-col>
@@ -84,7 +84,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <div class="input-label">通讯地址（可选）</div>
+            <div class="input-label">通讯地址</div>
             <el-form-item>
               <el-input v-model="form.contactAddress" placeholder="地址"></el-input>
             </el-form-item>
@@ -148,6 +148,14 @@
 <script>
 export default {
   data() {
+    var validatePass = (rule, value, callback) => {
+      console.log("到达",value)
+      if (this.form.githubAccount === '' && this.form.giteeAccount === '' && this.form.atomgitAccount === ''){
+        callback(new Error("GitHub，Gitee，AtomGit账号至少填写一项"))
+      } else {
+        callback()
+      }
+    }
     return {
       countrys: [
         {value:'Angola',label:'安哥拉'},
@@ -351,6 +359,26 @@ export default {
         organizationId: '',
         atomgitAccount: '',
       },
+      rules: {
+        name: [
+          { required : true, message: '请输入姓名', trigger: 'blur' }
+        ],
+        nationality: [
+          { required : true, message: '请选择国家', trigger: 'blur' }
+        ],
+        organizationId: [
+          { required : true, message: '请输入学校', trigger: 'blur' }
+        ],
+        githubAccount: [
+          { validator: validatePass, trigger: 'blur' }
+        ],
+        giteeAccount: [
+          { validator: validatePass, trigger: 'blur' }
+        ],
+        atomgitAccount: [
+          { validator: validatePass, trigger: 'blur' }
+        ],
+      },
     };
   },
   methods: {
@@ -368,40 +396,39 @@ export default {
       }
     },
     submitForm() {
-      this.$http.post("/member/register/single",this.form)
-          .then(response => {
-            console.log(response.data)
-          })
-          .catch(error => {
-            console.error(error)
-          })
+      this.$refs["form"].validate((valid) => {
+        if (valid) {
+          this.$http.post("/member/register/single",this.form)
+              .then(response => {
+                console.log(response.data)
+                this.$message.success('注册成功！');
+              })
+              .catch(error => {
+                console.error(error)
+                this.$message.error('注册失败');
+              })
+        } else {
+          return false;
+        }
+      })
     },
     goToOrgRegister() {
       this.$router.push({ name : 'OrgRegister' })
     },
     templateDownload() {
-      this.$http({
-        method: 'get',
-        url: '/member/register/download', // 根据实际路径调整
-        responseType: 'blob',      // 设置响应类型为 blob
-      }).then((response) => {
-          // 创建 Blob 对象
-          const blob = new Blob([response.body], { type: response.headers.get('content-type') });
-          // 创建下载链接
-          const downloadUrl = window.URL.createObjectURL(blob);
-          const link = document.createElement('a');
-          link.href = downloadUrl;
-          link.download = 'template.xlsx'; // 设置文件名
-          document.body.appendChild(link);
-          link.click();
-          // 移除链接
-          link.remove();
-          window.URL.revokeObjectURL(downloadUrl);
-        })
-        .catch((error) => {
+      this.$http.get('/member/register/download',{responseType: 'blob'}).then(response => {
+        const blob = new Blob([response.data]);
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'template.xlsx';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+      }).catch(error => {
           console.error("下载文件时出错:", error);
-        });
-    },
+      })},
     uploadFile({ file }) {
       const formData = new FormData();
       formData.append('file', file);
@@ -410,10 +437,12 @@ export default {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
-      })
-        .catch(error => {
-          console.error('上传失败', error);
-        });
+      }).then((response) => {
+        this.$message.success('注册成功');
+      }).catch(error => {
+        console.error('上传失败', error);
+        this.$message.error('注册失败');
+      });
     }
   },
   mounted() {
