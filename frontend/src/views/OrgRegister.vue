@@ -15,10 +15,10 @@
 
     <el-main>
       <!-- <el-form ref="form" :model="form" label-width="120px" @submit.prevent="submitForm"> -->
-      <el-form ref="form" :model="form" label-width="120px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-row :gutter="20">
           <el-col :span="8">
-            <el-form-item label="组织名称">
+            <el-form-item label="组织名称" prop="name">
               <el-input v-model="form.name" placeholder="名称"></el-input>
             </el-form-item>
           </el-col>
@@ -40,7 +40,7 @@
         <el-row :gutter="20">
           <el-col :span="8">
             <el-form-item label="项目范围">
-              <el-select v-model="form.category1" placeholder="请选择">
+              <el-select v-model="form.category1" placeholder="请选择" disabled>
                 <el-option
                   label="国家重点发展项目"
                   value="国家重点发展项目"
@@ -50,7 +50,7 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="平台权限">
-              <el-select v-model="form.category2" placeholder="请选择">
+              <el-select v-model="form.category2" placeholder="请选择" disabled>
                 <el-option
                   label="全球化模式：1:1:1"
                   value="全球化模式：1:1:1"
@@ -60,7 +60,7 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="评价模型">
-              <el-select v-model="form.category3" placeholder="请选择">
+              <el-select v-model="form.category3" placeholder="请选择" disabled>
                 <el-option
                   label="工信部标准院标准：网络模型"
                   value="工信部标准院标准：网络模型"
@@ -72,7 +72,7 @@
 
         <el-row :gutter="20">
           <el-col :span="8">
-            <el-form-item label="数据时间范围">
+            <el-form-item label="数据时间范围" prop="startDate">
               <el-date-picker
                 v-model="form.startDate"
                 type="month"
@@ -81,7 +81,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item>
+            <el-form-item prop="endDate">
               <el-date-picker
                 v-model="form.endDate"
                 type="month"
@@ -91,7 +91,7 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="分析报告">
-              <el-select v-model="form.category4" placeholder="请选择">
+              <el-select v-model="form.category4" placeholder="请选择" disabled>
                 <el-option label="普通版" value="普通版"></el-option>
               </el-select>
             </el-form-item>
@@ -132,12 +132,23 @@ export default {
         name: "",
         link: "",
         contactEmail: "",
-        category1: "",
-        category2: "",
-        category3: "",
+        category1: "国家重点发展项目",
+        category2: "全球化模式：1:1:1",
+        category3: "工信部标准院标准：网络模型",
         startDate: "",
         endDate: "",
-        category4: "",
+        category4: "普通版",
+      },
+      rules: {
+        name: [
+          { required: true, message: '组织名称是必填项', trigger: 'blur' }
+        ],
+        startDate: [
+          { required: true, message: '开始日期是必填项', trigger: 'change' }
+        ],
+        endDate: [
+          { required: true, message: '结束日期是必填项', trigger: 'change' }
+        ],
       },
     };
   },
@@ -145,20 +156,38 @@ export default {
     goToRankList() {
       this.$router.push({ name: "RankList" }); // 确保路由名称为 RankList
     },
+    // submitForm() {
+    //   // axios.post('/api/org/register', this.form)
+    //   // this.$http.post('http://localhost:8081/org/register', this.form)
+    //   this.$http.post("/org/register",this.form)
+    //     .then(response => {
+    //       console.log('注册成功', response.data);
+    //       // 可添加成功提示或执行其他操作
+    //       this.$message.success('注册成功！');
+    //     })
+    //     .catch(error => {
+    //       console.error('注册失败', error);
+    //       // 可添加错误提示或执行其他操作
+    //       this.$message.error('注册失败：' + error.message);
+    //     });
+    // },
     submitForm() {
-      // axios.post('/api/org/register', this.form)
-      // this.$http.post('http://localhost:8081/org/register', this.form)
-      this.$http.post("/org/register",this.form)
-        .then(response => {
-          console.log('注册成功', response.data);
-          // 可添加成功提示或执行其他操作
-          this.$message.success('注册成功！');
-        })
-        .catch(error => {
-          console.error('注册失败', error);
-          // 可添加错误提示或执行其他操作
-          this.$message.error('注册失败：' + error.message);
-        });
+      this.$refs.form.validate((valid) => {
+        if (valid) {
+          this.$http.post("/org/register", this.form)
+            .then(response => {
+              console.log('注册成功', response.data);
+              this.$message.success('注册成功！');
+            })
+            .catch(error => {
+              console.error('注册失败', error);
+              this.$message.error('注册失败：' + error.message);
+            });
+        } else {
+          this.$message.error('请填写所有必填项');
+          return false;
+        }
+      });
     },
   },
 };
