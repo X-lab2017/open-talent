@@ -3,7 +3,7 @@
     <el-header>
       <div class="logo">Logo</div>
       <el-menu mode="horizontal">
-        <el-menu-item>排行榜</el-menu-item>
+        <el-menu-item @click="goToRankList">排行榜</el-menu-item>
         <el-menu-item>待定</el-menu-item>
         <el-menu-item>待定</el-menu-item>
       </el-menu>
@@ -142,6 +142,9 @@ export default {
     };
   },
   methods: {
+    goToRankList() {
+      this.$router.push({ name: "RankList" }); // 确保路由名称为 RankList
+    },
     submitForm() {
       // axios.post('/api/org/register', this.form)
       // this.$http.post('http://localhost:8081/org/register', this.form)
@@ -165,7 +168,7 @@ export default {
 .org-register {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  /* height: 100vh; */
 }
 
 .el-header {
