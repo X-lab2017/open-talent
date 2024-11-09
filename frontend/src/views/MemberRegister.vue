@@ -1,24 +1,11 @@
 <template>
   <div>
-    <el-header>
-      <div class="logo">Logo</div>
-      <el-menu mode="horizontal">
-        <el-menu-item>排行榜</el-menu-item>
-        <el-menu-item>待定</el-menu-item>
-        <el-menu-item>待定</el-menu-item>
-      </el-menu>
-      <el-button-group>
-        <el-button type="primary" plain>组织注册</el-button>
-        <el-button type="primary">成员注册</el-button>
-      </el-button-group>
-    </el-header>
-
+    <NavMenu></NavMenu>
 
     <div class="d1">
       <h3>成员注册</h3>
       <el-form :model="form" :rules="rules" ref="form" label-position="left">
         <el-row :gutter="180">
-          <!-- 第一行，三列 -->
           <el-col :span="8">
             <div class="input-label">姓名</div>
             <el-form-item prop="name">
@@ -125,28 +112,28 @@
         </el-upload>
       </div>
 
-
-
+      <el-footer>
+        <div class="footer-content">
+          <img
+              src="/images/lab-logo.png"
+              alt="Xlab Logo"
+              class="footer-logo"
+          />
+          <p>官方支持</p >
+          <p>Copyright © 2024 X-lab</p >
+        </div>
+      </el-footer>
     </div>
-
-    <el-footer>
-      <div class="footer-content">
-        <img
-            src="/images/lab-logo.png"
-            alt="Xlab Logo"
-            class="footer-logo"
-        />
-        <p>官方支持</p >
-        <p>Copyright © 2024 X-lab</p >
-      </div>
-    </el-footer>
   </div>
 
 
 </template>
 
 <script>
+import NavMenu from "@/components/NavMenu.vue";
+
 export default {
+  components: {NavMenu},
   data() {
     var validatePass = (rule, value, callback) => {
       console.log("到达",value)
@@ -467,48 +454,6 @@ export default {
 }
 .el-row{
   margin-bottom: 20px;
-}
-
-.el-button--primary {
-  color: #FFF;
-  background-color: #131313;
-  border-color: #CDCDCD;
-}
-.el-button--primary:focus, .el-button--primary:hover {
-  background: #E8E8E8;
-  border-color: #131313;
-  color: #131313;
-}
-
-.el-button--primary.is-plain {
-  color: #5F5F5F;
-  background: #FFF;
-  border-color: #CDCDCD;
-}
-
-.el-button--primary.is-plain:focus, .el-button--primary.is-plain:hover {
-  background: #131313;
-  border-color: #131313;
-  color: #FFF;
-}
-
-.el-header {
-  background: #fff;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-}
-
-.logo {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.el-menu {
-  flex: 1;
-  margin-left: 20px;
 }
 .el-footer {
   text-align: center;

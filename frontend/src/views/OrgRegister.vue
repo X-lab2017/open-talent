@@ -1,17 +1,6 @@
 <template>
   <div class="org-register">
-    <el-header>
-      <div class="logo">Logo</div>
-      <el-menu mode="horizontal">
-        <el-menu-item @click="goToRankList">排行榜</el-menu-item>
-        <el-menu-item>待定</el-menu-item>
-        <el-menu-item>待定</el-menu-item>
-      </el-menu>
-      <el-button-group>
-        <el-button type="primary" plain>组织注册</el-button>
-        <el-button type="primary">成员注册</el-button>
-      </el-button-group>
-    </el-header>
+    <NavMenu></NavMenu>
 
     <el-main>
       <!-- <el-form ref="form" :model="form" label-width="120px" @submit.prevent="submitForm"> -->
@@ -124,8 +113,10 @@
 
 <script>
 import axios from 'axios';
+import NavMenu from "@/components/NavMenu.vue";
 
 export default {
+  components: {NavMenu},
   data() {
     return {
       form: {
@@ -198,25 +189,6 @@ export default {
   display: flex;
   flex-direction: column;
   /* height: 100vh; */
-}
-
-.el-header {
-  background: #fff;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-}
-
-.logo {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.el-menu {
-  flex: 1;
-  margin-left: 20px;
 }
 
 .el-main {

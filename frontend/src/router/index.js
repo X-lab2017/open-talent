@@ -4,6 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import OrgRegister from '@/views/OrgRegister.vue'
 import MemberRegister from "@/views/MemberRegister.vue"
 import RankList from '@/views/RankList.vue'
+import MemberProfile from "@/views/MemberProfile.vue";
 
 Vue.use(VueRouter)
 
@@ -35,6 +36,11 @@ const routes = [
     path: '/rank-list',
     name: 'RankList',
     component: RankList,
+  },
+  {
+    path: '/member-profile',
+    name: 'MemberProfile',
+    component: MemberProfile
   },
 ]
 
