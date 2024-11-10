@@ -21,6 +21,12 @@ export default {
         this.isPlain = !this.isPlain
       }
     },
+    goToRankList() {
+      const currentRouteName = this.$route.name;
+      if (currentRouteName !== 'RankList') {
+        this.$router.push({name: 'RankList'})
+      }
+    },
   }
 }
 </script>
@@ -29,7 +35,7 @@ export default {
   <el-header>
     <div class="logo">Logo</div>
     <el-menu mode="horizontal">
-      <el-menu-item>排行榜</el-menu-item>
+      <el-menu-item v-on:click="goToRankList">排行榜</el-menu-item>
       <el-menu-item>待定</el-menu-item>
       <el-menu-item>待定</el-menu-item>
     </el-menu>
