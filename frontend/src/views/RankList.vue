@@ -1,18 +1,7 @@
 <template>
   <div class="rank-list">
     <!-- Header -->
-    <el-header>
-      <div class="logo">Logo</div>
-      <el-menu mode="horizontal">
-        <el-menu-item @click="goToRankList">排行榜</el-menu-item>
-        <el-menu-item>待定</el-menu-item>
-        <el-menu-item>待定</el-menu-item>
-      </el-menu>
-      <el-button-group>
-        <el-button type="primary" plain>组织注册</el-button>
-        <el-button type="primary">成员注册</el-button>
-      </el-button-group>
-    </el-header>
+    <NavMenu></NavMenu>
 
     <!-- Main Content -->
     <el-main>
@@ -66,7 +55,7 @@
             <el-button
               type="primary"
               size="mini"
-              @click="goToDetail(scope.row)"
+              v-on:click="goToDetail"
             >
               详情
             </el-button>
@@ -99,8 +88,11 @@
 </template>
     
   <script>
+
+  import NavMenu from "@/components/NavMenu.vue";
 export default {
   name: "MemberContributionRank",
+  components: {NavMenu},
   data() {
     return {
       members: [
@@ -246,10 +238,8 @@ export default {
         this.$router.go(0);
       }
     },
-    goToDetail(member) {
-      // 假设使用 Vue Router 进行导航
-      // 根据实际路由调整路径
-      this.$router.push({ name: "MemberDetail", params: { id: member.rank } });
+    goToDetail() {
+      this.$router.push({ name: "MemberProfile"});
     },
     handleCurrentChange(page) {
       this.currentPage = page;

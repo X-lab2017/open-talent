@@ -1,8 +1,7 @@
 package com.example.backend.controller;
 
-import com.alibaba.excel.util.IoUtils;
 import com.example.backend.common.Result;
-import com.example.backend.domain.Org;
+import com.example.backend.entity.Org;
 import com.example.backend.service.OrgService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

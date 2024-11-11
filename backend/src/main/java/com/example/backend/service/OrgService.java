@@ -1,8 +1,7 @@
 package com.example.backend.service;
 
-import com.example.backend.domain.Org;
+import com.example.backend.entity.Org;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.example.backend.entity.Member;
 
 /**
  * @author HDX
