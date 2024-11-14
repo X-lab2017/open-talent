@@ -3,6 +3,8 @@ package com.example.backend.service;
 import com.example.backend.entity.Org;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * @author HDX
  * @description 针对表【organizations】的数据库操作Service
@@ -10,4 +12,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface OrgService extends IService<Org> {
     void orgRegister(Org org);
+    List<Org> getAllOrganizations();
 }

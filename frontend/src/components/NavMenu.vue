@@ -33,15 +33,15 @@ export default {
 
 <template>
   <el-header>
-    <div class="logo">Logo</div>
+    <div class="logo">OpenTalent</div>
     <el-menu mode="horizontal">
       <el-menu-item v-on:click="goToRankList">排行榜</el-menu-item>
-      <el-menu-item>待定</el-menu-item>
-      <el-menu-item>待定</el-menu-item>
+      <!-- <el-menu-item>待定</el-menu-item>
+      <el-menu-item>待定</el-menu-item> -->
     </el-menu>
     <el-button-group>
       <el-button type="primary" :plain="isPlain" v-on:click="goToOrgRegister">组织注册</el-button>
-      <el-button type="primary" :plain="!isPlain" v-on:click="goToMemberRegister">成员注册</el-button>
+      <el-button type="primary" :plain="isPlain" v-on:click="goToMemberRegister">成员注册</el-button>
     </el-button-group>
   </el-header>
 </template>

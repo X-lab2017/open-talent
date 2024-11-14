@@ -7,6 +7,9 @@ import com.example.backend.mapper.OrgMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * @author HDX
  * @description 针对表【organizations】的数据库操作Service实现
@@ -23,6 +26,10 @@ public class OrgServiceImpl extends ServiceImpl<OrgMapper, Org>
         orgMapper.insert(org);
     }
 
+    @Override
+    public List<Org> getAllOrganizations() {
+        return orgMapper.selectList(null);  // 返回完整的 Org 对象列表
+    }
 }
 
 

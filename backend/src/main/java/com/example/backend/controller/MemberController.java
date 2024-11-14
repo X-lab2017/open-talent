@@ -1,6 +1,7 @@
 package com.example.backend.controller;
 
 import com.alibaba.excel.util.IoUtils;
+import com.example.backend.common.Result;
 import com.example.backend.entity.Member;
 import com.example.backend.model.BaseResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
+import java.util.List;
 
 @RestController
 @RequestMapping("/member")
@@ -50,4 +52,9 @@ public class MemberController {
         return BaseResponse.success(memberServiceImpl.getOrgName());
     }
 
+    @GetMapping("/search")
+    public Result<List<Member>> searchMembers() {  // 新增的搜索接口
+        List<Member> members = memberServiceImpl.getAllMembers();
+        return Result.success(members);
+    }
 }

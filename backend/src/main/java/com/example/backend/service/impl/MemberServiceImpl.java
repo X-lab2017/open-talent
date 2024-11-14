@@ -25,6 +25,13 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
 
     @Autowired
     private OrgMapper orgMapper;
+    @Autowired
+    private MemberMapper memberMapper;
+
+    @Override
+    public List<Member> getAllMembers() {
+        return memberMapper.selectList(null);  // 获取所有成员
+    }
 
     @Override
     public void singleRegister(Member req) {
