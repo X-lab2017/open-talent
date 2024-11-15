@@ -7,19 +7,21 @@
     <el-main>
       <h2 class="title">成员贡献度排行榜</h2>
       <div class="filters">
-        <el-input
+        <el-select
           v-model="orgFilter"
-          placeholder="组织"
+          placeholder="选择组织"
           class="filter-input"
+          filterable
           clearable
-        ></el-input>
-        <el-input
-          v-model="communityFilter"
-          placeholder="参与社区"
-          class="filter-input"
-          clearable
-        ></el-input>
-        <el-button type="primary" @click="resetFilters">重置过滤</el-button>
+        >
+          <el-option
+            v-for="org in organizations"
+            :key="org.organizationId"
+            :label="org.name"
+            :value="org.name"
+          ></el-option>
+        </el-select>
+        <el-button type="primary" @click="searchMembers">搜索</el-button>
       </div>
       <el-table
         :data="paginatedMembers"
@@ -29,7 +31,7 @@
       >
         <el-table-column prop="rank" label="排名"></el-table-column>
         <el-table-column prop="name" label="姓名"></el-table-column>
-        <el-table-column label="OpenRank">
+        <el-table-column prop="openrankValue" label="OpenRank">
           <template slot="header">
             <span>OpenRank</span>
             <el-button
@@ -46,7 +48,7 @@
             ></el-button>
           </template>
           <template slot-scope="scope">
-            {{ scope.row.openRank }}
+            {{ scope.row.openrankValue }}
           </template>
         </el-table-column>
         <el-table-column prop="activeMonths" label="活跃月数"></el-table-column>
@@ -87,115 +89,17 @@
   </div>
 </template>
     
-  <script>
-
-  import NavMenu from "@/components/NavMenu.vue";
+<script>
+import NavMenu from "@/components/NavMenu.vue";
 export default {
   name: "MemberContributionRank",
   components: {NavMenu},
   data() {
     return {
-      members: [
-        {
-          rank: 1,
-          name: "张三",
-          openRank: 50,
-          activeMonths: 10,
-          organization: "组织A",
-          community: "社区X",
-        },
-        {
-          rank: 2,
-          name: "李四",
-          openRank: 45,
-          activeMonths: 8,
-          organization: "组织B",
-          community: "社区Y",
-        },
-        {
-          rank: 3,
-          name: "王五",
-          openRank: 42,
-          activeMonths: 7,
-          organization: "组织A",
-          community: "社区X",
-        },
-        {
-          rank: 4,
-          name: "张三",
-          openRank: 39,
-          activeMonths: 10,
-          organization: "组织A",
-          community: "社区X",
-        },
-        {
-          rank: 5,
-          name: "李四",
-          openRank: 35,
-          activeMonths: 8,
-          organization: "组织B",
-          community: "社区Y",
-        },
-        {
-          rank: 6,
-          name: "王五",
-          openRank: 30,
-          activeMonths: 7,
-          organization: "组织A",
-          community: "社区X",
-        },
-        {
-          rank: 7,
-          name: "张三",
-          openRank: 20,
-          activeMonths: 10,
-          organization: "组织A",
-          community: "社区X",
-        },
-        {
-          rank: 8,
-          name: "李四",
-          openRank: 18,
-          activeMonths: 8,
-          organization: "组织B",
-          community: "社区Y",
-        },
-        {
-          rank: 9,
-          name: "王五",
-          openRank: 15,
-          activeMonths: 7,
-          organization: "组织A",
-          community: "社区X",
-        },
-        {
-          rank: 10,
-          name: "张三",
-          openRank: 13,
-          activeMonths: 10,
-          organization: "组织A",
-          community: "社区X",
-        },
-        {
-          rank: 11,
-          name: "李四",
-          openRank: 11,
-          activeMonths: 8,
-          organization: "组织B",
-          community: "社区Y",
-        },
-        {
-          rank: 12,
-          name: "王五",
-          openRank: 10,
-          activeMonths: 7,
-          organization: "组织A",
-          community: "社区X",
-        },
-        // 更多成员数据...
-      ],
+      members: [],
+      organizations: [],
       orgFilter: "",
-      communityFilter: "",
+      // communityFilter: "",
       currentPage: 1,
       pageSize: 10,
       sortOrder: "desc", // 默认降序
@@ -204,20 +108,14 @@ export default {
   computed: {
     filteredMembers() {
       let filtered = this.members.filter((member) => {
-        const orgMatch = member.organization
-          .toLowerCase()
-          .includes(this.orgFilter.toLowerCase());
-        const communityMatch = member.community
-          .toLowerCase()
-          .includes(this.communityFilter.toLowerCase());
-        return orgMatch && communityMatch;
+        return member.organization.toLowerCase().includes(this.orgFilter.toLowerCase());
       });
 
       // 排序
       if (this.sortOrder === "asc") {
-        filtered.sort((a, b) => a.openRank - b.openRank);
+        filtered.sort((a, b) => a.openrankValue - b.openrankValue);
       } else if (this.sortOrder === "desc") {
-        filtered.sort((a, b) => b.openRank - a.openRank);
+        filtered.sort((a, b) => b.openrankValue - a.openrankValue);
       }
 
       return filtered;
@@ -229,6 +127,52 @@ export default {
     },
   },
   methods: {
+      fetchOrganizations() {
+      // 从服务端获取组织列表
+      this.$http.get("/org/search").then((response) => {
+        console.log("组织数据：", response.data); // 调试输出
+        const organizations = response.data.data; // 获取实际的组织列表
+        if (organizations && organizations.length > 0) {
+          this.organizations = organizations;
+        } else {
+          console.error("组织数据为空或格式不正确");
+        }
+      }).catch(error => {
+        console.error("获取组织数据失败：", error);
+      });
+    },
+    fetchMembers() {
+      // 从服务端获取成员列表
+      this.$http.get("/member/search").then((response) => {
+        console.log("成员数据：", response.data); // 调试输出
+        const members = response.data.data; // 假设返回的数据结构是 { code, msg, data }
+        if (Array.isArray(members)) {
+          // 将 organizationId 对应 organization 名称
+          this.members = members.map(member => {
+            const org = this.organizations.find(org => org.organizationId === member.organizationId);
+            return {
+              ...member,
+              organization: org ? org.name : '未知组织'
+            };
+          });
+          // 按 openrankValue 排序并分配排名
+          this.members.sort((a, b) => b.openrankValue - a.openrankValue);
+          this.members.forEach((member, index) => {
+            member.rank = index + 1; // 分配排名，从1开始
+          });
+        } else {
+          console.error("成员数据格式不正确");
+          this.members = []; // 确保 members 始终是一个数组
+        }
+      }).catch(error => {
+        console.error("获取成员数据失败：", error);
+        this.members = []; // 确保在错误情况下 members 也是一个数组
+      });
+    },
+    searchMembers() {
+      this.currentPage = 1; // 重置到第一页
+      this.fetchMembers(); // 重新获取成员数据
+    },
     goToRankList() {
       // 检查当前路径是否与目标路径相同
       if (this.$route.name !== "RankList") {
@@ -247,15 +191,20 @@ export default {
     setSortOrder(order) {
       this.sortOrder = order;
     },
-    resetFilters() {
-      this.orgFilter = "";
-      this.communityFilter = "";
-    },
+    // resetFilters() {
+    //   this.orgFilter = "";
+    //   this.communityFilter = "";
+    // },
+  },
+  // 需要配置后端接口
+  mounted() {
+    this.fetchOrganizations();
+    this.fetchMembers();
   },
 };
 </script>
   
-  <style scoped>
+<style scoped>
 .rank-list {
   display: flex;
   flex-direction: column;

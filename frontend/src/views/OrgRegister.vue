@@ -29,38 +29,36 @@
         <el-row :gutter="20">
           <el-col :span="8">
             <el-form-item label="项目范围">
-              <el-select v-model="form.category1" placeholder="请选择" disabled>
-                <el-option
-                  label="国家重点发展项目"
-                  value="国家重点发展项目"
-                ></el-option>
+              <el-select v-model="form.category1" placeholder="请选择">
+                <el-option label="国家重点发展项目" value="国家重点发展项目"></el-option>
+                <el-option label="全球影响力排名前10000项目" value="全球影响力排名前10000项目"></el-option>
+                <el-option label="CCF开源项目分级列表" value="CCF开源项目分级列表"></el-option>
+                <el-option label="个性化定制" value="个性化定制"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="平台权限">
-              <el-select v-model="form.category2" placeholder="请选择" disabled>
-                <el-option
-                  label="全球化模式：1:1:1"
-                  value="全球化模式：1:1:1"
-                ></el-option>
+            <el-form-item label="平台权重">
+              <el-select v-model="form.category2" placeholder="请选择">
+                <el-option label="全球化模式：1:1:1" value="全球化模式：1:1:1"></el-option>
+                <el-option label="中国优先模式：2:2:1" value="中国优先模式：2:2:1"></el-option>
+                <el-option label="基金会优先模式：5:3:2" value="基金会优先模式：5:3:2"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="评价模型">
-              <el-select v-model="form.category3" placeholder="请选择" disabled>
-                <el-option
-                  label="工信部标准院标准：网络模型"
-                  value="工信部标准院标准：网络模型"
-                ></el-option>
+              <el-select v-model="form.category3" placeholder="请选择">
+                <el-option label="工信部标准院标准：网络模型" value="工信部标准院标准：网络模型"></el-option>
+                <el-option label="工信部标准院标准：统计模型" value="工信部标准院标准：统计模型"></el-option>
+                <el-option label="个性化定制" value="个性化定制"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
         </el-row>
 
         <el-row :gutter="20">
-          <el-col :span="8">
+          <!-- <el-col :span="8">
             <el-form-item label="数据时间范围" prop="startDate">
               <el-date-picker
                 v-model="form.startDate"
@@ -77,12 +75,26 @@
                 placeholder="XX年XX月"
               ></el-date-picker>
             </el-form-item>
+          </el-col> -->
+          <el-col :span="8">
+            <el-form-item label="数据时间范围" prop="dateRange">
+              <el-date-picker
+                v-model="form.dateRange"
+                type="daterange"
+                unlink-panels
+                range-separator="至"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+                :picker-options="datePickerOptions"
+              ></el-date-picker>
+            </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="分析报告">
-              <el-select v-model="form.category4" placeholder="请选择" disabled>
-                <el-option label="普通版" value="普通版"></el-option>
-              </el-select>
+              <el-radio-group v-model="form.category4">
+                <el-radio label="普通版">普通版</el-radio>
+                <el-radio label="专业版" :disabled="true">专业版</el-radio>
+              </el-radio-group>
             </el-form-item>
           </el-col>
         </el-row>
@@ -126,6 +138,7 @@ export default {
         category1: "国家重点发展项目",
         category2: "全球化模式：1:1:1",
         category3: "工信部标准院标准：网络模型",
+        dateRange: [],
         startDate: "",
         endDate: "",
         category4: "普通版",
@@ -140,6 +153,14 @@ export default {
         endDate: [
           { required: true, message: '结束日期是必填项', trigger: 'change' }
         ],
+        dateRange: [
+          { type: 'array', required: true, message: '请选择数据时间范围', trigger: 'change' }
+        ],
+      },
+      datePickerOptions: {
+        disabledDate(time) {
+          return time.getTime() > Date.now();
+        }
       },
     };
   },
@@ -165,6 +186,8 @@ export default {
     submitForm() {
       this.$refs.form.validate((valid) => {
         if (valid) {
+          this.form.startDate = this.form.dateRange[0];
+          this.form.endDate = this.form.dateRange[1];
           this.$http.post("/org/register", this.form)
             .then(response => {
               console.log('注册成功', response.data);
