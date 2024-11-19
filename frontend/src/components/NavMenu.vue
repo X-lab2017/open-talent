@@ -15,6 +15,12 @@ export default {
     }
   },
   methods: {
+    goToMemberList() {
+      const currentRouteName = this.$route.name;
+      if (currentRouteName !== 'MemberList') {
+        this.$router.push({name: 'MemberList'})
+      }
+    },
     goToOrgRegister() {
       const currentRouteName = this.$route.name;
       if (currentRouteName !== 'OrgRegister') {
@@ -44,6 +50,7 @@ export default {
     <div class="logo">OpenTalent</div>
     <el-menu mode="horizontal">
       <el-menu-item v-on:click="goToRankList">排行榜</el-menu-item>
+      <el-menu-item v-on:click="goToMemberList">成员列表</el-menu-item>
       <!-- <el-menu-item>待定</el-menu-item>
       <el-menu-item>待定</el-menu-item> -->
     </el-menu>
