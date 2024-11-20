@@ -5,6 +5,7 @@ import OrgRegister from '@/views/OrgRegister.vue'
 import MemberRegister from "@/views/MemberRegister.vue"
 import RankList from '@/views/RankList.vue'
 import MemberProfile from "@/views/MemberProfile.vue";
+import MemberList from '@/views/MemberList.vue'
 
 Vue.use(VueRouter)
 
@@ -41,6 +42,11 @@ const routes = [
     path: '/member-profile',
     name: 'MemberProfile',
     component: MemberProfile
+  },
+  {
+    path: '/member-list',
+    name: 'MemberList',
+    component: MemberList, // 新增
   },
 ]
 

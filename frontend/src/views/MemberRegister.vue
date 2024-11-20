@@ -1,132 +1,113 @@
 <template>
-  <div>
+  <el-container class="member-register">
     <NavMenu></NavMenu>
 
-    <div class="d1">
-      <h3>成员注册</h3>
-      <el-form :model="form" :rules="rules" ref="form" label-position="left">
-        <el-row :gutter="180">
+    <el-main>
+      <el-form :model="form" :rules="rules" ref="form" label-width="120px">
+        <el-row :gutter="20" justify="center">
           <el-col :span="8">
-            <div class="input-label">姓名</div>
-            <el-form-item prop="name">
-              <el-input v-model="form.name" placeholder="名字"></el-input>
+            <el-form-item label="姓名" prop="name">
+              <el-input v-model="form.name" placeholder="名字" class="full-width-input"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <div class="input-label">国家</div>
-            <el-form-item prop="nationality">
-              <el-select v-model="form.nationality" filterable placeholder="选择国家">
+            <el-form-item label="国家" prop="nationality">
+              <el-select v-model="form.nationality" filterable placeholder="选择国家" class="full-width-input">
                 <el-option
-                    v-for="item in countrys"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
+                  v-for="item in countrys"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
                 </el-option>
               </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <div class="input-label">学校</div>
-            <el-form-item prop="organizationId">
-              <el-select v-model="form.organizationId" filterable placeholder="学校">
+            <el-form-item label="学校" prop="organizationId">
+              <el-select v-model="form.organizationId" filterable placeholder="学校" class="full-width-input">
                 <el-option
-                    v-for="item in orgs"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
+                  v-for="item in orgs"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
                 </el-option>
               </el-select>
             </el-form-item>
           </el-col>
+          <el-col :span="8">
+            <el-form-item label="GitHub账号" prop="githubAccount">
+              <el-input v-model="form.githubAccount" placeholder="账号" class="full-width-input"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="Gitee账号" prop="giteeAccount">
+              <el-input v-model="form.giteeAccount" placeholder="账号" class="full-width-input"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="AtomGit账号" prop="atomgitAccount">
+              <el-input v-model="form.atomgitAccount" placeholder="账号" class="full-width-input"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="联系邮箱">
+              <el-input v-model="form.contactEmail" placeholder="邮箱" class="full-width-input"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="通讯地址">
+              <el-input v-model="form.contactAddress" placeholder="地址" class="full-width-input"></el-input>
+            </el-form-item>
+          </el-col>
         </el-row>
 
-        <el-row :gutter="180">
-          <!-- 第二行，三列 -->
-          <el-col :span="8">
-            <div class="input-label">GitHub账号</div>
-            <el-form-item prop="githubAccount">
-              <el-input v-model="form.githubAccount" placeholder="账号"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <div class="input-label">Gitee账号</div>
-            <el-form-item prop="giteeAccount">
-              <el-input v-model="form.giteeAccount" placeholder="账号"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <div class="input-label">AtomGit账号</div>
-            <el-form-item prop="atomgitAccount">
-              <el-input v-model="form.atomgitAccount" placeholder="账号"></el-input>
-            </el-form-item>
-          </el-col>
+        <h3 style="text-align: center;">批量注册</h3>
+        <el-row justify="center" style="margin: 20px 0;">
+          <el-row :span="8" style="text-align: center;">
+            <el-button
+              icon="el-icon-download"
+              type="primary"
+              plain
+              v-on:click="templateDownload"
+            >模板下载</el-button>
+          </el-row>
+          <el-row :span="8" style="text-align: center;">
+            <el-upload
+              class="upload-demo"
+              action="/member/register/upload"
+              :http-request="uploadFile"
+              :limit="1"
+            >
+              <el-button
+                icon="el-icon-upload2"
+                type="primary"
+                plain
+              >批量导入</el-button>
+            </el-upload>
+          </el-row>
         </el-row>
 
-        <el-row :gutter="180">
-          <!-- 第三行，两列（剩下一列空白） -->
-          <el-col :span="8">
-            <div class="input-label">联系邮箱</div>
-            <el-form-item>
-              <el-input v-model="form.contactEmail" placeholder="邮箱"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <div class="input-label">通讯地址</div>
-            <el-form-item>
-              <el-input v-model="form.contactAddress" placeholder="地址"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <!-- 可以选择添加其他表单项或者留空 -->
+        <el-row justify="center">
+          <el-col :span="24" class="button-group">
+            <el-button type="primary" plain v-on:click="goToOrgRegister">返回</el-button>
+            <el-button type="primary" v-on:click="submitForm">完成注册</el-button>
           </el-col>
         </el-row>
       </el-form>
+    </el-main>
 
-      <div style="margin:0 0 40px 0">
-        <el-button type="primary" v-on:click="goToOrgRegister" >返回</el-button>
-        <el-button type="primary" plain v-on:click="submitForm">完成注册</el-button>
+    <el-footer>
+      <div class="footer-content">
+        <img
+          src="/images/lab-logo.png"
+          alt="Xlab Logo"
+          class="footer-logo"
+        />
+        <p>官方支持</p>
+        <p>Copyright © 2024 X-lab</p>
       </div>
-
-      <h3>批量注册</h3>
-      <div style="margin:20px 0">
-<!--        <el-button icon="el-icon-upload2" type="primary" plain>批量导入</el-button>-->
-        <el-button
-            icon="el-icon-download"
-            type="primary"
-            plain v-on:click="templateDownload"
-            style="margin: 10px 0;"
-        >模板下载</el-button>
-
-        <el-upload
-            class="upload-demo"
-            action="/member/register/upload"
-            :http-request="uploadFile"
-            :limit="1"
-        >
-          <el-button
-              icon="el-icon-upload2"
-              type="primary"
-              plain
-              style="margin: 10px 0;"
-          >批量导入</el-button>
-        </el-upload>
-      </div>
-
-      <el-footer>
-        <div class="footer-content">
-          <img
-              src="/images/lab-logo.png"
-              alt="Xlab Logo"
-              class="footer-logo"
-          />
-          <p>官方支持</p >
-          <p>Copyright © 2024 X-lab</p >
-        </div>
-      </el-footer>
-    </div>
-  </div>
-
-
+    </el-footer>
+  </el-container>
 </template>
 
 <script>
@@ -138,7 +119,7 @@ export default {
     var validatePass = (rule, value, callback) => {
       console.log("到达",value)
       if (this.form.githubAccount === '' && this.form.giteeAccount === '' && this.form.atomgitAccount === ''){
-        callback(new Error("GitHub，Gitee，AtomGit账号至少填写一项"))
+        callback(new Error("账号至少填写一项"))
       } else {
         callback()
       }
@@ -439,21 +420,18 @@ export default {
 </script>
 
 <style scoped>
+.member-register {
+  display: flex;
+  flex-direction: column;
+}
+.el-main {
+  flex: 1;
+  padding: 70px 90px 50px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
 .el-select{
   display: block;
-}
-.input-label{
-  text-align: left; /* 显式设置文本靠左，虽然这是默认行为 */
-  margin-top: 15px; /* 上边距 */
-  margin-bottom: 8px; /* 下边距 */
-  margin-left: 2px; /* 左边距 */
-  font-size: 14px;
-}
-.d1{
-  margin: 0px 10%;
-}
-.el-row{
-  margin-bottom: 20px;
 }
 .el-footer {
   text-align: center;
@@ -470,5 +448,9 @@ export default {
   width: 50px;
   height: 50px;
   margin-bottom: 10px;
+}
+.button-group {
+  text-align: center;
+  margin-top: 20px;
 }
 </style>
