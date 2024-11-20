@@ -12,6 +12,10 @@ public interface MemberService {
 
     void batchRegister(MultipartFile file) throws IOException;
 
+    void deleteMemberById(Integer memberId);
+
+    void updateMember(Integer memberId, Member member);
+
     Map<Integer,String> getOrgName();
 
     List<Member> getAllMembers();
