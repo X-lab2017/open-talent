@@ -57,4 +57,16 @@ public class MemberController {
         List<Member> members = memberServiceImpl.getAllMembers();
         return Result.success(members);
     }
+
+    @DeleteMapping("/delete/{memberId}")
+    public BaseResponse deleteMember(@PathVariable Integer memberId) {
+        memberServiceImpl.deleteMemberById(memberId);
+        return BaseResponse.success();
+    }
+
+    @PutMapping("/edit/{memberId}")
+    public BaseResponse editMember(@PathVariable Integer memberId, @RequestBody Member member) {
+        memberServiceImpl.updateMember(memberId, member);
+        return BaseResponse.success();
+    }
 }

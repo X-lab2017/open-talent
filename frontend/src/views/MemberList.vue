@@ -117,36 +117,36 @@ export default {
     },
   },
   methods: {
-    fetchMembers() {
-      // 从服务端获取成员列表
-      this.$http
-        .get("/member/search")
-        .then((response) => {
-          const members = response.data.data;
-          this.members = members.map((member) => {
-            const org = this.organizations.find(
-              (org) => org.organizationId === member.organizationId
-            );
-            return {
-              ...member,
-              organization: org ? org.name : "未知组织",
-            };
-          });
-        })
-        .catch((error) => {
-          console.error("获取成员数据失败：", error);
+    async fetchMembers() {
+      try {
+        // 确保组织数据已经被获取
+        if (this.organizations.length === 0) {
+          await this.fetchOrganizations();
+        }
+        // 从服务端获取成员列表
+        const response = await this.$http.get("/member/search");
+        const members = response.data.data;
+        this.members = members.map((member) => {
+          const org = this.organizations.find(
+            (org) => org.organizationId === member.organizationId
+          );
+          return {
+            ...member,
+            organization: org ? org.name : "未知组织",
+          };
         });
+      } catch (error) {
+        console.error("获取成员数据失败：", error);
+      }
     },
-    fetchOrganizations() {
-      // 从服务端获取组织列表
-      this.$http
-        .get("/org/search")
-        .then((response) => {
-          this.organizations = response.data.data;
-        })
-        .catch((error) => {
-          console.error("获取组织数据失败：", error);
-        });
+    async fetchOrganizations() {
+      try {
+        // 从服务端获取组织列表
+        const response = await this.$http.get("/org/search");
+        this.organizations = response.data.data;
+      } catch (error) {
+        console.error("获取组织数据失败：", error);
+      }
     },
     searchMembers() {
       this.currentPage = 1;
@@ -197,7 +197,7 @@ export default {
     },
   },
   mounted() {
-    this.fetchOrganizations();
+    // this.fetchOrganizations();
     this.fetchMembers();
   },
 };

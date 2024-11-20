@@ -63,4 +63,15 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
         });
         return res;
     }
+
+    @Override
+    public void deleteMemberById(Integer memberId) {
+        baseMapper.deleteById(memberId);
+    }
+
+    @Override
+    public void updateMember(Integer memberId, Member member) {
+        member.setMemberId(memberId);
+        baseMapper.updateById(member);
+    }
 }
