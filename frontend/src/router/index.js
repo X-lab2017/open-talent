@@ -6,6 +6,7 @@ import MemberRegister from "@/views/MemberRegister.vue"
 import RankList from '@/views/RankList.vue'
 import MemberProfile from "@/views/MemberProfile.vue";
 import MemberList from '@/views/MemberList.vue'
+import OrgRankList from "@/views/OrgRankList.vue";
 
 Vue.use(VueRouter)
 
@@ -44,9 +45,14 @@ const routes = [
     component: MemberProfile
   },
   {
+    path: '/org-rank-list',
+    name: 'OrgRankList',
+    component: OrgRankList
+  },
+  {
     path: '/member-list',
     name: 'MemberList',
-    component: MemberList, // 新增
+    component: MemberList,
   },
 ]
 
