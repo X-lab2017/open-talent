@@ -4,79 +4,97 @@
     <NavMenu></NavMenu>
 
     <!-- Main Content -->
-    <el-main>
-      <h2 class="title">成员贡献度排行榜</h2>
-      <div class="filters">
-        <el-select
-          v-model="orgFilter"
-          placeholder="选择组织"
-          class="filter-input"
-          filterable
-          clearable
-        >
-          <el-option
-            v-for="org in organizations"
-            :key="org.organizationId"
-            :label="org.name"
-            :value="org.name"
-          ></el-option>
-        </el-select>
-        <el-button type="primary" @click="searchMembers">搜索</el-button>
-      </div>
-      <el-table
-        :data="paginatedMembers"
-        style="width: 100%"
-        stripe
-        size="medium"
-      >
-        <el-table-column prop="rank" label="排名"></el-table-column>
-        <el-table-column prop="name" label="姓名"></el-table-column>
-        <el-table-column prop="openrankValue" label="OpenRank">
-          <template slot="header">
-            <span>OpenRank</span>
-            <el-button
-              type="text"
-              icon="el-icon-caret-top"
-              @click="setSortOrder('asc')"
-              :class="{ active: sortOrder === 'asc' }"
-            ></el-button>
-            <el-button
-              type="text"
-              icon="el-icon-caret-bottom"
-              @click="setSortOrder('desc')"
-              :class="{ active: sortOrder === 'desc' }"
-            ></el-button>
-          </template>
-          <template slot-scope="scope">
-            {{ scope.row.openrankValue }}
-          </template>
-        </el-table-column>
-        <el-table-column prop="activeMonths" label="活跃月数"></el-table-column>
-        <el-table-column label="详情页面">
-          <template slot-scope="scope">
-            <el-button
-              type="primary"
-              size="mini"
-              v-on:click="goToDetail"
-            >
-              详情
-            </el-button>
-          </template>
-        </el-table-column>
-      </el-table>
+    <div>
+      <el-main>
+        <h2 class="title">成员贡献度排行榜</h2>
+        <div class="filters">
+          <el-select
+              v-model="orgFilter"
+              placeholder="选择组织"
+              class="filter-input"
+              filterable
+              clearable
+          >
+            <el-option
+                v-for="org in organizations"
+                :key="org.organizationId"
+                :label="org.name"
+                :value="org.name"
+            ></el-option>
+          </el-select>
+          <el-button type="primary" plain @click="searchMembers">搜索</el-button>
+        </div>
+        <div style="margin: 0 30px">
+          <el-table
+              :row-class-name="tableRowClassName"
 
-      <!-- Pagination -->
-      <div class="pagination-container">
-        <el-pagination
-          @current-change="handleCurrentChange"
-          :current-page="currentPage"
-          :page-size="pageSize"
-          layout="prev, pager, next"
-          :total="filteredMembers.length"
-        >
-        </el-pagination>
-      </div>
-    </el-main>
+              :header-cell-style="{ color: '#ffffff', fontSize: '18px', backgroundColor: '#111E33' }"
+              :data="paginatedMembers"
+              style="width: 100%"
+              size="medium"
+          >
+            <el-table-column prop="rank" label="排名"></el-table-column>
+            <el-table-column prop="name" label="姓名"></el-table-column>
+            <el-table-column prop="openrankValue" label="OpenRank">
+              <template slot="header">
+                <span>OpenRank</span>
+                <el-button
+                    type="text"
+                    icon="el-icon-caret-top"
+                    plain
+                    @click="setSortOrder('asc')"
+                    :class="{ active: sortOrder === 'asc' }"
+                ></el-button>
+                <el-button
+                    type="text"
+                    icon="el-icon-caret-bottom"
+                    @click="setSortOrder('desc')"
+                    :class="{ active: sortOrder === 'desc' }"
+                ></el-button>
+              </template>
+              <template slot-scope="scope">
+                {{ scope.row.openrankValue }}
+                <img src="../assets/increase.svg" style="margin: 0 7px">
+                10.0
+              </template>
+            </el-table-column>
+            <el-table-column prop="activeMonths" label="活跃月数">
+              <template slot-scope="scope">
+                {{ scope.row.openrankValue }}
+                <img src="../assets/decrease.svg" style="margin: 0 7px">
+                10.0
+              </template>
+            </el-table-column>
+            <el-table-column label="详情页面">
+              <template slot-scope="scope">
+                <el-button
+                    type="primary"
+                    size="mini"
+                    v-on:click="goToDetail"
+                >
+                  详情
+                </el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
+
+
+        <!-- Pagination -->
+        <div class="pagination-container">
+          <el-pagination
+              @current-change="handleCurrentChange"
+              :current-page="currentPage"
+              :page-size="pageSize"
+              layout="prev, pager, next"
+              :total="filteredMembers.length"
+          >
+          </el-pagination>
+        </div>
+      </el-main>
+    </div>
+
+
 
     <!-- Footer -->
     <el-footer>
@@ -195,6 +213,14 @@ export default {
     //   this.orgFilter = "";
     //   this.communityFilter = "";
     // },
+    tableRowClassName({ row, rowIndex }) {
+        console.log(rowIndex)
+      if (rowIndex % 2 === 0) {
+        return 'even-row' //这是类名
+      } else  {
+        return 'odd-row'
+      }
+    },
   },
   // 需要配置后端接口
   mounted() {
@@ -203,12 +229,11 @@ export default {
   },
 };
 </script>
-  
-<style scoped>
+
+<style>
 .rank-list {
   display: flex;
   flex-direction: column;
-  /* height: 100vh; */
 }
 
 .el-header {
@@ -230,19 +255,12 @@ export default {
   margin-left: 20px;
 }
 
-.el-main {
-  flex: 1;
-  padding: 50px;
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* 使内容居中 */
-  width: 100%; /* 确保主内容占满宽度 */
-}
+
 
 .filters {
   display: flex;
   justify-content: center; /* 使过滤按钮居中 */
-  width: 30%; /* 确保过滤器占满宽度 */
+  text-align: center;
   margin-bottom: 20px; /* 添加一些底部间距 */
 }
 
@@ -289,5 +307,58 @@ export default {
   background: #131313;
   border-color: #131313;
   color: #fff;
+}
+
+
+.el-pager li {
+  background: #111E33;
+}
+
+.el-pagination{
+  text-align: center;
+}
+
+.el-pagination button:disabled {
+  background-color: #111E33;
+  color: #ACC5D3
+}
+
+.el-pagination button {
+  background-color: #111E33 !important;
+  color: #FFF !important;
+}
+
+.el-pager li.active {
+  color: #FFF !important;
+}
+
+.el-pager li {
+  color: #ACC5DB !important;
+  background-color: #111E33 !important;
+}
+
+.el-pager li:hover {
+  color: #FFF !important;
+  background-color: #111E33 !important;
+}
+
+.el-table td.el-table__cell, .el-table th.el-table__cell.is-leaf {
+  border-bottom: 1px solid #FFF;
+}
+
+.el-table .even-row {
+  background-color:#213046 !important;
+  color: #FFF;
+  font-size: 16px;
+}
+
+.el-table .odd-row {
+  background-color:#111E33 !important;
+  color: #FFF;
+  font-size: 16px;
+}
+
+.el-table tbody tr:hover>td {
+  background-color: transparent !important;
 }
 </style>
