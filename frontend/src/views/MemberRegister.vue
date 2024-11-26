@@ -4,13 +4,11 @@
 
     <el-main>
       <el-form :model="form" :rules="rules" ref="form" label-width="120px">
-        <el-row :gutter="20" justify="center">
-          <el-col :span="8">
+
             <el-form-item label="姓名" prop="name">
               <el-input v-model="form.name" placeholder="名字" class="full-width-input"></el-input>
             </el-form-item>
-          </el-col>
-          <el-col :span="8">
+
             <el-form-item label="国家" prop="nationality">
               <el-select v-model="form.nationality" filterable placeholder="选择国家" class="full-width-input">
                 <el-option
@@ -21,8 +19,7 @@
                 </el-option>
               </el-select>
             </el-form-item>
-          </el-col>
-          <el-col :span="8">
+
             <el-form-item label="学校" prop="organizationId">
               <el-select v-model="form.organizationId" filterable placeholder="学校" class="full-width-input">
                 <el-option
@@ -33,59 +30,54 @@
                 </el-option>
               </el-select>
             </el-form-item>
-          </el-col>
-          <el-col :span="8">
+
             <el-form-item label="GitHub账号" prop="githubAccount">
               <el-input v-model="form.githubAccount" placeholder="账号" class="full-width-input"></el-input>
             </el-form-item>
-          </el-col>
-          <el-col :span="8">
+
             <el-form-item label="Gitee账号" prop="giteeAccount">
               <el-input v-model="form.giteeAccount" placeholder="账号" class="full-width-input"></el-input>
             </el-form-item>
-          </el-col>
-          <el-col :span="8">
+
             <el-form-item label="AtomGit账号" prop="atomgitAccount">
               <el-input v-model="form.atomgitAccount" placeholder="账号" class="full-width-input"></el-input>
             </el-form-item>
-          </el-col>
-          <el-col :span="8">
+
             <el-form-item label="联系邮箱">
               <el-input v-model="form.contactEmail" placeholder="邮箱" class="full-width-input"></el-input>
             </el-form-item>
-          </el-col>
-          <el-col :span="8">
+
             <el-form-item label="通讯地址">
               <el-input v-model="form.contactAddress" placeholder="地址" class="full-width-input"></el-input>
             </el-form-item>
-          </el-col>
-        </el-row>
+
 
         <h3 style="text-align: center;">批量注册</h3>
-        <el-row justify="center" style="margin: 20px 0;">
-          <el-row :span="8" style="text-align: center;">
-            <el-button
+        <div style="text-align: center">
+          <el-button
               icon="el-icon-download"
               type="primary"
               plain
               v-on:click="templateDownload"
-            >模板下载</el-button>
-          </el-row>
-          <el-row :span="8" style="text-align: center;">
-            <el-upload
+              style="display: inline; margin: 0 10px"
+          >模板下载</el-button>
+
+          <el-upload
               class="upload-demo"
               action="/member/register/upload"
               :http-request="uploadFile"
               :limit="1"
-            >
-              <el-button
+              style="display: inline; margin: 0 10px"
+          >
+            <el-button
                 icon="el-icon-upload2"
                 type="primary"
                 plain
-              >批量导入</el-button>
-            </el-upload>
-          </el-row>
-        </el-row>
+            >批量导入</el-button>
+          </el-upload>
+        </div>
+
+
 
         <el-row justify="center">
           <el-col :span="24" class="button-group">
@@ -117,7 +109,6 @@ export default {
   components: {NavMenu},
   data() {
     var validatePass = (rule, value, callback) => {
-      console.log("到达",value)
       if (this.form.githubAccount === '' && this.form.giteeAccount === '' && this.form.atomgitAccount === ''){
         callback(new Error("账号至少填写一项"))
       } else {
@@ -321,7 +312,7 @@ export default {
         name: '',
         githubAccount: '',
         contactEmail: '',
-        nationality: '',
+        nationality: 'China',
         giteeAccount: '',
         contactAddress: '',
         organizationId: '',

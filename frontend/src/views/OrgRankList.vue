@@ -6,35 +6,17 @@
     <!-- Main Content -->
     <div>
       <el-main>
-        <h2 class="title">成员贡献度排行榜</h2>
-        <div class="filters">
-          <el-select
-              v-model="orgFilter"
-              placeholder="选择组织"
-              class="filter-input"
-              filterable
-              clearable
-          >
-            <el-option
-                v-for="org in organizations"
-                :key="org.organizationId"
-                :label="org.name"
-                :value="org.name"
-            ></el-option>
-          </el-select>
-          <el-button type="primary" plain @click="searchMembers">搜索</el-button>
-        </div>
+        <h2 class="title">组织贡献度排行榜</h2>
         <div style="margin: 0 30px">
           <el-table
               :row-class-name="tableRowClassName"
-
               :header-cell-style="{ color: '#ffffff', fontSize: '18px', backgroundColor: '#111E33' }"
-              :data="paginatedMembers"
+              :data="paginatedOrganizations"
               style="width: 100%"
               size="medium"
           >
             <el-table-column prop="rank" label="排名"></el-table-column>
-            <el-table-column prop="name" label="姓名"></el-table-column>
+            <el-table-column prop="name" label="高校名称"></el-table-column>
             <el-table-column prop="openrankValue" label="OpenRank">
               <template slot="header">
                 <span>OpenRank</span>
@@ -53,32 +35,62 @@
                 ></el-button>
               </template>
               <template slot-scope="scope">
-                {{ scope.row.openrankValue }}
-                <img src="../assets/increase.svg" style="margin: 0 7px">
-                10.0
-              </template>
-            </el-table-column>
-            <el-table-column prop="activeMonths" label="活跃月数">
-              <template slot-scope="scope">
-                {{ scope.row.openrankValue }}
+                60.0
                 <img src="../assets/decrease.svg" style="margin: 0 7px">
                 10.0
               </template>
             </el-table-column>
-            <el-table-column label="详情页面">
-              <template slot-scope="scope">
+
+            <el-table-column prop="openrankValue" label="参赛学生数">
+              <template slot="header">
+                <span>参赛学生数</span>
                 <el-button
-                    type="primary"
-                    size="mini"
-                    v-on:click="goToDetail"
-                >
-                  详情
-                </el-button>
+                    type="text"
+                    icon="el-icon-caret-top"
+                    plain
+                    @click="setSortOrder('asc')"
+                    :class="{ active: sortOrder === 'asc' }"
+                ></el-button>
+                <el-button
+                    type="text"
+                    icon="el-icon-caret-bottom"
+                    @click="setSortOrder('desc')"
+                    :class="{ active: sortOrder === 'desc' }"
+                ></el-button>
+              </template>
+              <template slot-scope="scope">
+                60.0
+                <img src="../assets/decrease.svg" style="margin: 0 7px">
+                10.0
               </template>
             </el-table-column>
+
+            <el-table-column prop="openrankValue" label="人均OpenRank">
+              <template slot="header">
+                <span>人均OpenRank</span>
+                <el-button
+                    type="text"
+                    icon="el-icon-caret-top"
+                    plain
+                    @click="setSortOrder('asc')"
+                    :class="{ active: sortOrder === 'asc' }"
+                ></el-button>
+                <el-button
+                    type="text"
+                    icon="el-icon-caret-bottom"
+                    @click="setSortOrder('desc')"
+                    :class="{ active: sortOrder === 'desc' }"
+                ></el-button>
+              </template>
+              <template slot-scope="scope">
+                3.2
+                <img src="../assets/increase.svg" style="margin: 0 7px">
+                1.0
+              </template>
+            </el-table-column>
+
           </el-table>
         </div>
-
 
         <!-- Pagination -->
         <div class="pagination-container">
@@ -87,13 +99,11 @@
               :current-page="currentPage"
               :page-size="pageSize"
               layout="prev, pager, next"
-              :total="filteredMembers.length"
-          >
-          </el-pagination>
+              :total="organizations.length"
+          ></el-pagination>
         </div>
       </el-main>
     </div>
-
 
 
     <!-- Footer -->
@@ -106,102 +116,58 @@
     </el-footer>
   </div>
 </template>
-    
+
 <script>
 import NavMenu from "@/components/NavMenu.vue";
+
 export default {
-  name: "MemberContributionRank",
-  components: {NavMenu},
+  name: "OrganizationContributionRank",
+  components: { NavMenu },
   data() {
     return {
-      members: [],
       organizations: [],
-      orgFilter: "",
-      // communityFilter: "",
       currentPage: 1,
       pageSize: 10,
       sortOrder: "desc", // 默认降序
     };
   },
   computed: {
-    filteredMembers() {
-      let filtered = this.members.filter((member) => {
-        return member.organization.toLowerCase().includes(this.orgFilter.toLowerCase());
-      });
-
-      // 排序
+    sortedOrganizations() {
+      let sorted = [...this.organizations];
       if (this.sortOrder === "asc") {
-        filtered.sort((a, b) => a.openrankValue - b.openrankValue);
-      } else if (this.sortOrder === "desc") {
-        filtered.sort((a, b) => b.openrankValue - a.openrankValue);
+        sorted.sort((a, b) => a.openrankValue - b.openrankValue);
+      } else {
+        sorted.sort((a, b) => b.openrankValue - a.openrankValue);
       }
-
-      return filtered;
+      return sorted;
     },
-    paginatedMembers() {
+    paginatedOrganizations() {
       const startIndex = (this.currentPage - 1) * this.pageSize;
       const endIndex = startIndex + this.pageSize;
-      return this.filteredMembers.slice(startIndex, endIndex);
+      return this.sortedOrganizations.slice(startIndex, endIndex);
     },
   },
   methods: {
-      fetchOrganizations() {
-      // 从服务端获取组织列表
-      this.$http.get("/org/search").then((response) => {
-        console.log("组织数据：", response.data); // 调试输出
-        const organizations = response.data.data; // 获取实际的组织列表
-        if (organizations && organizations.length > 0) {
-          this.organizations = organizations;
-        } else {
-          console.error("组织数据为空或格式不正确");
-        }
-      }).catch(error => {
-        console.error("获取组织数据失败：", error);
-      });
-    },
-    fetchMembers() {
-      // 从服务端获取成员列表
-      this.$http.get("/member/search").then((response) => {
-        console.log("成员数据：", response.data); // 调试输出
-        const members = response.data.data; // 假设返回的数据结构是 { code, msg, data }
-        if (Array.isArray(members)) {
-          // 将 organizationId 对应 organization 名称
-          this.members = members.map(member => {
-            const org = this.organizations.find(org => org.organizationId === member.organizationId);
-            return {
-              ...member,
-              organization: org ? org.name : '未知组织'
-            };
+    fetchOrganizations() {
+      this.$http
+          .get("/org/search")
+          .then((response) => {
+            console.log("组织数据：", response.data);
+            const organizations = response.data.data;
+            if (Array.isArray(organizations)) {
+              this.organizations = organizations.map((org, index) => ({
+                ...org,
+                rank: index + 1,
+              }));
+            } else {
+              console.error("组织数据格式不正确");
+              this.organizations = [];
+            }
+          })
+          .catch((error) => {
+            console.error("获取组织数据失败：", error);
+            this.organizations = [];
           });
-          // 按 openrankValue 排序并分配排名
-          this.members.sort((a, b) => b.openrankValue - a.openrankValue);
-          this.members.forEach((member, index) => {
-            member.rank = index + 1; // 分配排名，从1开始
-          });
-        } else {
-          console.error("成员数据格式不正确");
-          this.members = []; // 确保 members 始终是一个数组
-        }
-      }).catch(error => {
-        console.error("获取成员数据失败：", error);
-        this.members = []; // 确保在错误情况下 members 也是一个数组
-      });
-    },
-    searchMembers() {
-      this.currentPage = 1; // 重置到第一页
-      this.fetchMembers(); // 重新获取成员数据
-    },
-    goToRankList() {
-      // 检查当前路径是否与目标路径相同
-      if (this.$route.name !== "RankList") {
-        this.$router.push({ name: "RankList" });
-      } else {
-        // 如果已经在 RankList 页面，刷新
-        this.$router.go(0);
-      }
-    },
-    goToDetail() {
-      this.$router.push({ name: "MemberProfile"});
     },
     handleCurrentChange(page) {
       this.currentPage = page;
@@ -209,31 +175,38 @@ export default {
     setSortOrder(order) {
       this.sortOrder = order;
     },
-    // resetFilters() {
-    //   this.orgFilter = "";
-    //   this.communityFilter = "";
-    // },
-    tableRowClassName({ row, rowIndex }) {
-        console.log(rowIndex)
-      if (rowIndex % 2 === 0) {
-        return 'even-row' //这是类名
-      } else  {
-        return 'odd-row'
-      }
+    goToDetail() {
+      this.$router.push({ name: "OrganizationProfile" });
+    },
+    tableRowClassName({ rowIndex }) {
+      return rowIndex % 2 === 0 ? "even-row" : "odd-row";
     },
   },
-  // 需要配置后端接口
   mounted() {
     this.fetchOrganizations();
-    this.fetchMembers();
   },
 };
 </script>
 
+
 <style>
 .rank-list {
-  display: flex;
-  flex-direction: column;
+  justify-content: center; /* 水平居中 */
+  text-align: center;
+
+}
+
+.rank-list .title{
+  color: #ACC5DB;
+  margin: 0 auto;
+}
+
+.rank-list .el-main{
+  display: inline-block;
+  background-color: #111E33; /* 深蓝色背景 */
+  border-radius: 15px; /* 圆角半径 */
+  padding: 50px 0;
+  width: 70%;
 }
 
 .el-header {
@@ -255,7 +228,14 @@ export default {
   margin-left: 20px;
 }
 
-
+.el-main {
+  flex: 1;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 使内容居中 */
+  width: 100%; /* 确保主内容占满宽度 */
+}
 
 .filters {
   display: flex;
