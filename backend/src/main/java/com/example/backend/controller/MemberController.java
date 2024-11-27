@@ -1,6 +1,7 @@
 package com.example.backend.controller;
 
 import com.alibaba.excel.util.IoUtils;
+import com.example.backend.common.JwtUtil;
 import com.example.backend.common.Result;
 import com.example.backend.entity.Member;
 import com.example.backend.model.BaseResponse;
@@ -51,7 +52,9 @@ public class MemberController {
     public BaseResponse getOrgName(){
         return BaseResponse.success(memberServiceImpl.getOrgName());
     }
-
+    /**
+     * 无JWT验证版本
+     */
     @GetMapping("/search")
     public Result<List<Member>> searchMembers() {  // 新增的搜索接口
         List<Member> members = memberServiceImpl.getAllMembers();
@@ -59,14 +62,48 @@ public class MemberController {
     }
 
     @DeleteMapping("/delete/{memberId}")
-    public BaseResponse deleteMember(@PathVariable Integer memberId) {
+    public Result deleteMember(@PathVariable Integer memberId) {
         memberServiceImpl.deleteMemberById(memberId);
-        return BaseResponse.success();
+        return Result.success();
     }
 
     @PutMapping("/edit/{memberId}")
-    public BaseResponse editMember(@PathVariable Integer memberId, @RequestBody Member member) {
+    public Result editMember(@PathVariable Integer memberId, @RequestBody Member member) {
         memberServiceImpl.updateMember(memberId, member);
-        return BaseResponse.success();
+        return Result.success();
     }
+    /**
+     * JWT验证（~~~备用待测试，请勿删除！！！~~~）
+     */
+//    @GetMapping("/search")
+//    public Result<List<Member>> searchMembers(@RequestHeader("Authorization") String token) {
+//        String orgName = JwtUtil.extractUsername(token.replace("Bearer ", ""));
+//        List<Member> members;
+//        if ("admin".equals(orgName)) {
+//            members = memberServiceImpl.getAllMembers();
+//        } else {
+//            members = memberServiceImpl.getMembersByOrgName(orgName);
+//        }
+//        return Result.success(members);
+//    }
+//
+//    @DeleteMapping("/delete/{memberId}")
+//    public Result deleteMember(@RequestHeader("Authorization") String token, @PathVariable Integer memberId) {
+//        String orgName = JwtUtil.extractUsername(token.replace("Bearer ", ""));
+//        if (!"admin".equals(orgName) && !memberServiceImpl.isMemberInOrg(memberId, orgName)) {
+//            return Result.error("无权限删除该成员");
+//        }
+//        memberServiceImpl.deleteMemberById(memberId);
+//        return Result.success();
+//    }
+//
+//    @PutMapping("/edit/{memberId}")
+//    public Result editMember(@RequestHeader("Authorization") String token, @PathVariable Integer memberId, @RequestBody Member member) {
+//        String orgName = JwtUtil.extractUsername(token.replace("Bearer ", ""));
+//        if (!"admin".equals(orgName) && !memberServiceImpl.isMemberInOrg(memberId, orgName)) {
+//            return Result.error("无权限编辑该成员");
+//        }
+//        memberServiceImpl.updateMember(memberId, member);
+//        return Result.success();
+//    }
 }

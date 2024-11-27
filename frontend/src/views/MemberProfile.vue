@@ -230,7 +230,7 @@ export default {
 
 
     <el-main>
-      <el-row :gutter="20">
+      <el-row :gutter="20" style="width: 100%;">
         <el-col :span="6">
           <el-card class="card">
             <div class="row1">
@@ -294,7 +294,7 @@ export default {
         </el-col>
       </el-row>
 
-      <el-row :gutter="20">
+      <el-row :gutter="20" style="width: 100%;">
         <el-col :span="16">
           <el-card class="card" >
             <div class="title">活跃度和OpenRank趋势</div>
@@ -325,7 +325,7 @@ export default {
         </el-col>
       </el-row>
 
-      <el-row :gutter="20">
+      <el-row :gutter="20" style="width: 100%;">
         <el-col :span="12">
           <el-card class="card">
             <div style="height: 235px">

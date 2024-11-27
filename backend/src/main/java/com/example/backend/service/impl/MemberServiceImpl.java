@@ -14,6 +14,7 @@ import com.example.backend.service.MemberService;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -73,5 +74,35 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
     public void updateMember(Integer memberId, Member member) {
         member.setMemberId(memberId);
         baseMapper.updateById(member);
+    }
+
+    /**
+     * JWT验证过程调用
+     */
+    @Override
+    public List<Member> getMembersByOrgName(String orgName) {
+        LambdaQueryWrapper<Org> orgQuery = new LambdaQueryWrapper<>();
+        orgQuery.eq(Org::getName, orgName);
+        Org org = orgMapper.selectOne(orgQuery);
+        if (org == null) {
+            return Collections.emptyList();
+        }
+        LambdaQueryWrapper<Member> memberQuery = new LambdaQueryWrapper<>();
+        memberQuery.eq(Member::getOrganizationId, org.getOrganizationId());
+        return memberMapper.selectList(memberQuery);
+    }
+
+    @Override
+    public boolean isMemberInOrg(Integer memberId, String orgName) {
+        LambdaQueryWrapper<Org> orgQuery = new LambdaQueryWrapper<>();
+        orgQuery.eq(Org::getName, orgName);
+        Org org = orgMapper.selectOne(orgQuery);
+        if (org == null) {
+            return false;
+        }
+        LambdaQueryWrapper<Member> memberQuery = new LambdaQueryWrapper<>();
+        memberQuery.eq(Member::getMemberId, memberId)
+                .eq(Member::getOrganizationId, org.getOrganizationId());
+        return memberMapper.selectCount(memberQuery) > 0;
     }
 }

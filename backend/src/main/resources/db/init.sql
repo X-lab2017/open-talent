@@ -15,17 +15,18 @@ DROP TABLE IF EXISTS `organizations`;
 #     contact_email VARCHAR(255)
 # ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 CREATE TABLE `organizations` (
-                                 organization_id INT AUTO_INCREMENT PRIMARY KEY,
-                                 name VARCHAR(255) NOT NULL,
-                                 link VARCHAR(255),
-                                 category1 VARCHAR(255),
-                                 category2 VARCHAR(255),
-                                 category3 VARCHAR(255),
-                                 category4 VARCHAR(255),
-                                 start_date DATE,
-                                 end_date DATE,
-                                 time_range VARCHAR(100),
-                                 contact_email VARCHAR(255)
+    organization_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    link VARCHAR(255),
+    category1 VARCHAR(255),
+    category2 VARCHAR(255),
+    category3 VARCHAR(255),
+    category4 VARCHAR(255),
+    start_date DATE,
+    end_date DATE,
+    time_range VARCHAR(255),
+    contact_email VARCHAR(255),
+    password VARCHAR(255)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 

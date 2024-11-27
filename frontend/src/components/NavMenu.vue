@@ -12,7 +12,13 @@ export default {
     },
     isMemberRegisterActive() {
       return this.$route.name === 'MemberRegister';
-    }
+    },
+    isLoggedIn() {
+      return !!localStorage.getItem('token'); // 检查是否存在 token
+    },
+    isOrgLoginPage() {
+      return this.$route.name === 'OrgLogin';
+    },
   },
   methods: {
     goToMemberList() {
@@ -47,6 +53,16 @@ export default {
         this.$router.push({name: 'OrgRankList'})
       }
     },
+    goToLogin() {
+      const currentRouteName = this.$route.name;
+      if (currentRouteName !== 'OrgLogin') {
+        this.$router.push({name: 'OrgLogin'})
+      }
+    },
+    logout() {
+      localStorage.removeItem('token'); // 移除 token
+      this.$router.push({name: 'OrgLogin'}); // 跳转到登录页面
+    }
   }
 }
 </script>
@@ -57,9 +73,17 @@ export default {
     <el-menu mode="horizontal">
       <el-menu-item v-on:click="goToRankList">成员贡献度排行榜</el-menu-item>
       <el-menu-item v-on:click="goToOrgRankList">高校贡献度排行榜</el-menu-item>
-      <el-menu-item v-on:click="goToMemberList">成员列表</el-menu-item>
+      <el-menu-item v-if="isLoggedIn" v-on:click="goToMemberList">成员列表</el-menu-item>
     </el-menu>
     <el-button-group>
+      <el-button v-if="!isLoggedIn" 
+        type="primary"
+        :plain="isPlain && !isOrgLoginPage"
+        @click="goToLogin">登录</el-button>
+      <el-button v-else 
+        type="primary" 
+        :plain="isPlain && !isOrgLoginPage"
+        @click="logout">退出登录</el-button>
       <el-button
         type="primary"
         :plain="isPlain && !isOrgRegisterActive"
@@ -96,5 +120,19 @@ export default {
 .el-menu {
   flex: 1;
   margin-left: 20px;
+}
+
+/* 新增样式 */
+.el-button--primary {
+  color: #fff;
+  background-color: #131313; 
+  border-color: #131313;
+}
+
+.el-button--primary:focus,
+.el-button--primary:hover {
+  background: #131313; 
+  border-color: #131313;
+  color: #fff;
 }
 </style>

@@ -7,6 +7,7 @@ import RankList from '@/views/RankList.vue'
 import MemberProfile from "@/views/MemberProfile.vue";
 import MemberList from '@/views/MemberList.vue'
 import OrgRankList from "@/views/OrgRankList.vue";
+import OrgLogin from '@/views/OrgLogin.vue'
 
 Vue.use(VueRouter)
 
@@ -54,6 +55,11 @@ const routes = [
     name: 'MemberList',
     component: MemberList,
   },
+  {
+    path: '/org-login',
+    name: 'OrgLogin',
+    component: OrgLogin,
+  },
 ]
 
 const router = new VueRouter({
@@ -61,5 +67,17 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+router.beforeEach((to, from, next) => {
+  const publicPages = ['RankList', 'OrgRankList', 'OrgRegister', 'MemberRegister', 'OrgLogin', 'MemberProfile'];
+  const authRequired = !publicPages.includes(to.name);
+  const loggedIn = localStorage.getItem('token');
+
+  if (authRequired && !loggedIn) {
+    return next({ name: 'OrgLogin' });
+  }
+
+  next();
+});
 
 export default router

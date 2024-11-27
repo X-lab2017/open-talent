@@ -4,24 +4,24 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.backend.mapper.OrgMapper">
 
-    <resultMap id="BaseResultMap" type="com.example.backend.entity.Org">
-            <id property="organizationId" column="organization_id" jdbcType="INTEGER"/>
-            <result property="name" column="name" jdbcType="VARCHAR"/>
-            <result property="link" column="link" jdbcType="VARCHAR"/>
-            <result property="category1" column="category1" jdbcType="VARCHAR"/>
-            <result property="category2" column="category2" jdbcType="VARCHAR"/>
-            <result property="category3" column="category3" jdbcType="VARCHAR"/>
-            <result property="category4" column="category4" jdbcType="VARCHAR"/>
-            <result property="startDate" column="start_date" jdbcType="DATE"/>
-            <result property="endDate" column="end_date" jdbcType="DATE"/>
-            <result property="timeRange" column="time_range" jdbcType="VARCHAR"/>
-            <result property="contactEmail" column="contact_email" jdbcType="VARCHAR"/>
-    </resultMap>
+<!--    <resultMap id="BaseResultMap" type="com.example.backend.entity.Org">-->
+<!--            <id property="organizationId" column="organization_id" jdbcType="INTEGER"/>-->
+<!--            <result property="name" column="name" jdbcType="VARCHAR"/>-->
+<!--            <result property="link" column="link" jdbcType="VARCHAR"/>-->
+<!--            <result property="category1" column="category1" jdbcType="VARCHAR"/>-->
+<!--            <result property="category2" column="category2" jdbcType="VARCHAR"/>-->
+<!--            <result property="category3" column="category3" jdbcType="VARCHAR"/>-->
+<!--            <result property="category4" column="category4" jdbcType="VARCHAR"/>-->
+<!--            <result property="startDate" column="start_date" jdbcType="DATE"/>-->
+<!--            <result property="endDate" column="end_date" jdbcType="DATE"/>-->
+<!--            <result property="timeRange" column="time_range" jdbcType="VARCHAR"/>-->
+<!--            <result property="contactEmail" column="contact_email" jdbcType="VARCHAR"/>-->
+<!--    </resultMap>-->
 
-    <sql id="Base_Column_List">
-        organization_id,name,link,
-        category1,category2,category3,
-        category4,start_date,end_date,
-        time_range,contact_email
-    </sql>
+<!--    <sql id="Base_Column_List">-->
+<!--        organization_id,name,link,-->
+<!--        category1,category2,category3,-->
+<!--        category4,start_date,end_date,-->
+<!--        time_range,contact_email-->
+<!--    </sql>-->
 </mapper>

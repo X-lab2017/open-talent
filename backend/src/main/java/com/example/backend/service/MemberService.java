@@ -19,4 +19,11 @@ public interface MemberService {
     Map<Integer,String> getOrgName();
 
     List<Member> getAllMembers();
+
+    /**
+     * JWT验证过程调用
+     */
+    List<Member> getMembersByOrgName(String orgName);
+
+    boolean isMemberInOrg(Integer memberId, String orgName);
 }
