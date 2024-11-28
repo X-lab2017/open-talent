@@ -10,6 +10,7 @@
           class="filter-input"
           filterable
           clearable
+          :disabled="!isAdmin"
         >
           <el-option
             v-for="org in organizations"
@@ -36,7 +37,7 @@
             <el-button
               type="danger"
               size="mini"
-              @click="deleteMember(scope.row)"
+              @click="confirmDelete(scope.row)"
               >删除</el-button
             >
           </template>
@@ -59,29 +60,47 @@
       width="30%"
     >
       <el-form :model="editForm">
-        <el-form-item label="姓名">
-          <el-input v-model="editForm.name"></el-input>
-        </el-form-item>
-        <el-form-item label="组织">
-          <el-select v-model="editForm.organizationId" placeholder="选择组织">
-            <el-option
-              v-for="org in organizations"
-              :key="org.organizationId"
-              :label="org.name"
-              :value="org.organizationId"
-            ></el-option>
-          </el-select>
-        </el-form-item>
+        <el-row :gutter="24">
+          <el-col :span="12">
+            <el-form-item label="姓名">
+              <el-input v-model="editForm.name"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="组织">
+              <el-select v-model="editForm.organizationId" placeholder="选择组织">
+                <el-option
+                  v-for="org in organizations"
+                  :key="org.organizationId"
+                  :label="org.name"
+                  :value="org.organizationId"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="editDialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="submitEdit">保存</el-button>
+      <div slot="footer" class="dialog-footer" style="text-align: center;">
+        <el-button type="primary" plain @click="editDialogVisible = false">取消</el-button>
+        <el-button type="primary" plain @click="submitEdit">保存</el-button>
+      </div>
+    </el-dialog>
+    <!-- 新增的删除确认弹窗 -->
+    <el-dialog
+      title="确认删除"
+      :visible.sync="deleteDialogVisible"
+      width="30%"
+    >
+      <span>您确定要删除该成员吗？</span>
+      <div slot="footer" class="dialog-footer" style="text-align: center;">
+        <el-button type="primary" plain @click="deleteDialogVisible = false">取消</el-button>
+        <el-button type="danger" @click="deleteMember">确认删除</el-button>
       </div>
     </el-dialog>
   </div>
 </template>
   
-  <script>
+<script>
 import NavMenu from "@/components/NavMenu.vue";
 export default {
   name: "MemberList",
@@ -95,11 +114,14 @@ export default {
       pageSize: 10,
 
       editDialogVisible: false,
+      deleteDialogVisible: false,
+      memberToDelete: null,
       editForm: {
         memberId: null,
         name: '',
         organizationId: null,
       },
+      searchQuery: localStorage.getItem("orgName"),
     };
   },
   computed: {
@@ -114,6 +136,9 @@ export default {
       const startIndex = (this.currentPage - 1) * this.pageSize;
       const endIndex = startIndex + this.pageSize;
       return this.filteredMembers.slice(startIndex, endIndex);
+    },
+    isAdmin() {
+      return localStorage.getItem("orgName") === "admin"; // 判断是否为admin
     },
   },
   methods: {
@@ -173,24 +198,32 @@ export default {
         console.error("更新成员失败：", error);
         this.$message.error("更新失败");
       });
-  },
+    },
     getOrganizationName(organizationId) {
       const org = this.organizations.find(org => org.organizationId === organizationId);
       return org ? org.name : '未知组织';
     },
-    deleteMember(member) {
-    // 发送 DELETE 请求以删除成员信息
-    this.$http.delete(`/member/delete/${member.memberId}`)
-      .then(() => {
-        // 从成员列表中移除已删除的成员
-        this.members = this.members.filter(m => m.memberId !== member.memberId);
-        this.$message.success("删除成功");
-      })
-      .catch(error => {
-        console.error("删除成员失败：", error);
-        this.$message.error("删除失败");
-      });
-      console.log("删除成员：", member);
+    confirmDelete(member) {
+      this.memberToDelete = member;
+      this.deleteDialogVisible = true;
+    },
+    deleteMember() {
+      if (!this.memberToDelete) return;
+      // 发送 DELETE 请求以删除成员信息
+      this.$http.delete(`/member/delete/${this.memberToDelete.memberId}`)
+        .then(() => {
+          // 从成员列表中移除已删除的成员
+          this.members = this.members.filter(m => m.memberId !== this.memberToDelete.memberId);
+          this.$message.success("删除成功");
+        })
+        .catch(error => {
+          console.error("删除成员失败：", error);
+          this.$message.error("删除失败");
+        })
+        .finally(() => {
+          this.deleteDialogVisible = false;
+          this.memberToDelete = null;
+        });
     },
     handleCurrentChange(page) {
       this.currentPage = page;
@@ -223,5 +256,18 @@ export default {
   justify-content: center;
   width: 30%;
   margin-bottom: 20px;
+}
+/* 新增样式 */
+.el-button--primary {
+  color: #fff;
+  background-color: #131313; 
+  border-color: #131313;
+}
+
+.el-button--primary:focus,
+.el-button--primary:hover {
+  background: #131313; 
+  border-color: #131313;
+  color: #fff;
 }
 </style>

@@ -6,20 +6,30 @@
       <!-- <el-form ref="form" :model="form" label-width="120px" @submit.prevent="submitForm"> -->
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-row :gutter="20" justify="center">
-          <el-col :span="8">
+          <el-col :span="16">
             <el-form-item label="组织名称" prop="name">
               <el-input v-model="form.name" placeholder="名称" class="full-width-input"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="8">
+          <el-col :span="16">
             <el-form-item label="组织介绍">
               <el-input v-model="form.link" placeholder="链接" class="full-width-input"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="8">
+          <el-col :span="16">
             <el-form-item label="联系邮箱">
               <el-input v-model="form.contactEmail" placeholder="邮箱" class="full-width-input"></el-input>
             </el-form-item>
+          </el-col>
+          <el-col :span="16">
+              <el-form-item label="输入密码" prop="password">
+                  <el-input type="password" v-model="form.password" placeholder="密码" class="full-width-input"></el-input>
+              </el-form-item>
+          </el-col>
+          <el-col :span="16">
+              <el-form-item label="确认密码" prop="confirmPassword">
+                  <el-input type="password" v-model="form.confirmPassword" placeholder="确认密码" class="full-width-input"></el-input>
+              </el-form-item>
           </el-col>
           <el-col :span="24">
             <el-form-item label="项目范围">
@@ -116,6 +126,8 @@ export default {
         startDate: "",
         endDate: "",
         category4: "普通版",
+        password: "",  // 新增
+        confirmPassword: ""  // 新增
       },
       rules: {
         name: [
@@ -130,6 +142,13 @@ export default {
         dateRange: [
           { type: 'array', required: true, message: '请选择数据时间范围', trigger: 'change' }
         ],
+        password: [
+           { required: true, message: '请输入密码', trigger: 'blur' }
+         ],
+         confirmPassword: [
+           { required: true, message: '请确认密码', trigger: 'blur' },
+           { validator: this.validatePassword, trigger: 'blur' }
+         ],
       },
       datePickerOptions: {
         disabledDate(time) {
@@ -157,6 +176,13 @@ export default {
     //       this.$message.error('注册失败：' + error.message);
     //     });
     // },
+    validatePassword(rule, value, callback) {
+       if (value !== this.form.password) {
+         callback(new Error('两次输入的密码不一致'));
+       } else {
+         callback();
+       }
+     },
     submitForm() {
       this.$refs.form.validate((valid) => {
         if (valid) {
@@ -166,6 +192,7 @@ export default {
             .then(response => {
               console.log('注册成功', response.data);
               this.$message.success('注册成功！');
+              this.$router.push({ name: 'OrgLogin' }); // 注册成功后跳转到登录页面
             })
             .catch(error => {
               console.error('注册失败', error);
@@ -229,29 +256,4 @@ export default {
   margin-left: 0;
 }
 
-.el-button--primary {
-  color: #fff;
-  background-color: #131313;
-  border-color: #cdcdcd;
-}
-
-.el-button--primary:focus,
-.el-button--primary:hover {
-  background: #e8e8e8;
-  border-color: #131313;
-  color: #131313;
-}
-
-.el-button--primary.is-plain {
-  color: #5f5f5f;
-  background: #fff;
-  border-color: #cdcdcd;
-}
-
-.el-button--primary.is-plain:focus,
-.el-button--primary.is-plain:hover {
-  background: #131313;
-  border-color: #131313;
-  color: #fff;
-}
 </style>

@@ -1,5 +1,6 @@
 package com.example.backend.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.backend.entity.Org;
 import com.example.backend.service.OrgService;
@@ -29,6 +30,10 @@ public class OrgServiceImpl extends ServiceImpl<OrgMapper, Org>
     @Override
     public List<Org> getAllOrganizations() {
         return orgMapper.selectList(null);  // 返回完整的 Org 对象列表
+    }
+    @Override
+    public Org findByName(String name) {
+        return orgMapper.selectOne(new QueryWrapper<Org>().eq("name", name));
     }
 }
 

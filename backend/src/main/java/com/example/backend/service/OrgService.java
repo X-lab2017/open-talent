@@ -13,4 +13,5 @@ import java.util.List;
 public interface OrgService extends IService<Org> {
     void orgRegister(Org org);
     List<Org> getAllOrganizations();
+    Org findByName(String name);
 }
