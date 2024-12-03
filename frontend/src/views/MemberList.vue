@@ -109,7 +109,7 @@ export default {
     return {
       members: [],
       organizations: [],
-      searchQuery: "",
+      
       currentPage: 1,
       pageSize: 10,
 
@@ -121,7 +121,7 @@ export default {
         name: '',
         organizationId: null,
       },
-      searchQuery: localStorage.getItem("orgName"),
+      searchQuery: "",
     };
   },
   computed: {
@@ -160,6 +160,10 @@ export default {
             organization: org ? org.name : "未知组织",
           };
         });
+        // 在获取成员后设置 searchQuery
+        if (!this.isAdmin) {
+          this.searchQuery = localStorage.getItem("orgName") || "";
+        }
       } catch (error) {
         console.error("获取成员数据失败：", error);
       }
@@ -231,7 +235,8 @@ export default {
   },
   mounted() {
     // this.fetchOrganizations();
-    this.fetchMembers();
+    this.searchMembers();
+    // this.fetchMembers();
   },
 };
 </script>
