@@ -28,12 +28,26 @@ const routes = [
   {
     path: '/org-register',
     name: 'OrgRegister',
-    component: OrgRegister
+    component: OrgRegister,
+    beforeEnter: (to, from, next) => {
+      const loggedIn = localStorage.getItem('token');
+      if (loggedIn) {
+        return next({ name: 'MemberList' }); // 如果组织已登录，重定向到列表页面
+      }
+      next();
+    }
   },
   {
     path: '/member-register',
     name: 'MemberRegister',
-    component: MemberRegister
+    component: MemberRegister,
+    beforeEnter: (to, from, next) => {
+      const loggedIn = localStorage.getItem('token');
+      if (!loggedIn) {
+        return next({ name: 'OrgLogin' }); // 如果组织未登录，重定向到登录页面
+      }
+      next();
+    }
   },
   {
     path: '/rank-list',

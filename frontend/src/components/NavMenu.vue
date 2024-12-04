@@ -69,7 +69,9 @@ export default {
 
 <template>
   <el-header>
-    <div class="logo">OpenTalent</div>
+    <div class="logo">
+      <img src="@/assets/headerlogo.png" alt="OpenTalent Logo" class="logo-image" />
+    </div>
     <el-menu mode="horizontal">
       <el-menu-item v-on:click="goToRankList">成员贡献度排行榜</el-menu-item>
       <el-menu-item v-on:click="goToOrgRankList">高校贡献度排行榜</el-menu-item>
@@ -85,6 +87,7 @@ export default {
         :plain="isPlain && !isOrgLoginPage"
         @click="logout">退出登录</el-button>
       <el-button
+        v-if="!isLoggedIn"
         type="primary"
         :plain="isPlain && !isOrgRegisterActive"
         v-on:click="goToOrgRegister"
@@ -92,6 +95,7 @@ export default {
         组织注册
       </el-button>
       <el-button
+        v-if="isLoggedIn"
         type="primary"
         :plain="isPlain && !isMemberRegisterActive"
         v-on:click="goToMemberRegister"
@@ -115,6 +119,9 @@ export default {
 .logo {
   font-size: 24px;
   font-weight: bold;
+}
+.logo-image {
+  height: 40px; /* 根据需要调整图片大小 */
 }
 
 .el-menu {
