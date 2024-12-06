@@ -23,7 +23,6 @@
                 <el-button
                     type="text"
                     icon="el-icon-caret-top"
-                    plain
                     @click="setSortOrder('asc')"
                     :class="{ active: sortOrder === 'asc' }"
                 ></el-button>
@@ -35,19 +34,18 @@
                 ></el-button>
               </template>
               <template slot-scope="scope">
-                60.0
-                <img src="../assets/decrease.svg" style="margin: 0 7px">
-                10.0
+                {{ scope.row.openrankRandom1 }}
+                <img :src="scope.row.openrankRandom1 < scope.row.openrankRandom2 ? require('@/assets/increase.svg') : require('@/assets/decrease.svg')" style="margin: 0 7px">
+                {{ scope.row.openrankRandom2 }}
               </template>
             </el-table-column>
 
             <el-table-column prop="openrankValue" label="参赛学生数">
               <template slot="header">
                 <span>参赛学生数</span>
-                <el-button
+                <!-- <el-button
                     type="text"
                     icon="el-icon-caret-top"
-                    plain
                     @click="setSortOrder('asc')"
                     :class="{ active: sortOrder === 'asc' }"
                 ></el-button>
@@ -56,22 +54,21 @@
                     icon="el-icon-caret-bottom"
                     @click="setSortOrder('desc')"
                     :class="{ active: sortOrder === 'desc' }"
-                ></el-button>
+                ></el-button> -->
               </template>
               <template slot-scope="scope">
-                60.0
-                <img src="../assets/decrease.svg" style="margin: 0 7px">
-                10.0
+                {{ scope.row.studentsRandom1 }}
+                <img :src="scope.row.studentsRandom1 < scope.row.studentsRandom2 ? require('@/assets/increase.svg') : require('@/assets/decrease.svg')" style="margin: 0 7px">
+                {{ scope.row.studentsRandom2 }}
               </template>
             </el-table-column>
 
             <el-table-column prop="openrankValue" label="人均OpenRank">
               <template slot="header">
                 <span>人均OpenRank</span>
-                <el-button
+                <!-- <el-button
                     type="text"
                     icon="el-icon-caret-top"
-                    plain
                     @click="setSortOrder('asc')"
                     :class="{ active: sortOrder === 'asc' }"
                 ></el-button>
@@ -80,12 +77,12 @@
                     icon="el-icon-caret-bottom"
                     @click="setSortOrder('desc')"
                     :class="{ active: sortOrder === 'desc' }"
-                ></el-button>
+                ></el-button> -->
               </template>
               <template slot-scope="scope">
-                3.2
-                <img src="../assets/increase.svg" style="margin: 0 7px">
-                1.0
+                {{ scope.row.avgOpenRank1.toFixed(2) }}
+                <img :src="scope.row.avgOpenRank1 < scope.row.avgOpenRank2 ? require('@/assets/increase.svg') : require('@/assets/decrease.svg')" style="margin: 0 7px">
+                {{ scope.row.avgOpenRank2.toFixed(2) }}
               </template>
             </el-table-column>
 
@@ -129,15 +126,18 @@ export default {
       currentPage: 1,
       pageSize: 10,
       sortOrder: "desc", // 默认降序
+      randomValues: {} // 新增：存储每个组织的随机值，用于测试展示
     };
   },
   computed: {
     sortedOrganizations() {
       let sorted = [...this.organizations];
       if (this.sortOrder === "asc") {
-        sorted.sort((a, b) => a.openrankValue - b.openrankValue);
+        // sorted.sort((a, b) => a.openrankValue - b.openrankValue);
+        sorted.sort((a, b) => a.openrankRandom2 - b.openrankRandom2); //暂时使用前端生成的随机值，用于展示
       } else {
-        sorted.sort((a, b) => b.openrankValue - a.openrankValue);
+        // sorted.sort((a, b) => b.openrankValue - a.openrankValue);
+        sorted.sort((a, b) => b.openrankRandom2 - a.openrankRandom2);
       }
       return sorted;
     },
@@ -155,10 +155,29 @@ export default {
             console.log("组织数据：", response.data);
             const organizations = response.data.data;
             if (Array.isArray(organizations)) {
-              this.organizations = organizations.map((org, index) => ({
-                ...org,
-                rank: index + 1,
-              }));
+              // 生成从大到小的 “随机” OpenRank 值，用于测试展示
+              const baseOpenRank = organizations.map((_, index) => 100 - index * 5);
+              this.organizations = organizations.map((org, index) => {
+                // 随机决定是加还是减
+                const randomAdjustment = Math.floor(Math.random() * 10);
+                const shouldAdd = Math.random() < 0.5;
+                const openrankRandom1 = shouldAdd 
+                  ? baseOpenRank[index] + randomAdjustment 
+                  : baseOpenRank[index] - randomAdjustment;
+                const openrankRandom2 = baseOpenRank[index];
+                const studentsRandom1 = Math.floor(Math.random() * 60) + 1; // 避免除以0
+                const studentsRandom2 = Math.floor(Math.random() * 60) + 1; // 避免除以0
+                return {
+                  ...org,
+                  rank: index + 1,
+                  openrankRandom1,
+                  openrankRandom2,
+                  studentsRandom1,
+                  studentsRandom2,
+                  avgOpenRank1: openrankRandom1 / studentsRandom1,
+                  avgOpenRank2: openrankRandom2 / studentsRandom2
+                };
+              });
             } else {
               console.error("组织数据格式不正确");
               this.organizations = [];

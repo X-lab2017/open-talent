@@ -71,6 +71,7 @@ export default {
   <el-header>
     <div class="logo">
       <img src="@/assets/headerlogo.png" alt="OpenTalent Logo" class="logo-image" />
+      <span class="logo-text">OpenTalent</span>
     </div>
     <el-menu mode="horizontal">
       <el-menu-item v-on:click="goToRankList">成员贡献度排行榜</el-menu-item>
@@ -117,8 +118,13 @@ export default {
 }
 
 .logo {
-  font-size: 24px;
-  font-weight: bold;
+  display: flex; /* 使 logo 和文字在同一行 */
+  align-items: center; /* 垂直居中对齐 */
+}
+.logo-text {
+  font-size: 24px; /* 文字大小 */
+  font-weight: bold; /* 文字加粗 */
+  color: #33548d; /* 设置文字颜色 */
 }
 .logo-image {
   height: 40px; /* 根据需要调整图片大小 */
