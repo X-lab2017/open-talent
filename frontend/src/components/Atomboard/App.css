@@ -1,0 +1,15 @@
+#root {
+  position: relative;
+}
+
+.warn {
+  display: flex;
+  width: 100vw;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.backIcon{
+  height: 100px;
+}

@@ -1,0 +1,39 @@
+.border {
+  position: absolute;
+  top: 981px;
+  left: 552px;
+}
+
+
+.contentContainer {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 756px;
+  height: 32px;
+  top: 981px;
+  left: 568px;
+  font-size: 16px;
+}
+
+.footerItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  margin-right: 0.5em;
+}
+
+.label {
+  font-weight: 700;
+  color: #AFCEE8;
+}
+
+.verticalDivider {
+  width: 1px;
+  height: 55%;
+  background-color: #638FB2;
+}

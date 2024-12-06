@@ -59,6 +59,12 @@ export default {
         this.$router.push({name: 'OrgLogin'})
       }
     },
+    goToAtomboard() {
+      const currentRouteName = this.$route.name;
+      if (currentRouteName !== 'Atomboard') {
+        this.$router.push({name: 'Atomboard'})
+      }
+    },
     logout() {
       localStorage.removeItem('token'); // 移除 token
       this.$router.push({name: 'OrgLogin'}); // 跳转到登录页面
@@ -75,6 +81,7 @@ export default {
     <el-menu mode="horizontal">
       <el-menu-item v-on:click="goToRankList">成员贡献度排行榜</el-menu-item>
       <el-menu-item v-on:click="goToOrgRankList">高校贡献度排行榜</el-menu-item>
+      <el-menu-item v-on:click="goToAtomboard">中国高校开源贡献全景图</el-menu-item>
       <el-menu-item v-if="isLoggedIn" v-on:click="goToMemberList">成员列表</el-menu-item>
     </el-menu>
     <el-button-group>

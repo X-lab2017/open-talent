@@ -93,12 +93,12 @@ export default {
         dataset: {
           source: [
             [ 'rank', 'source'],
-            [20, 'Open-Digger6'],
-            [40, 'Open-Digger5'],
-            [60, 'Open-Digger4'],
-            [80, 'Open-Digger3'],
-            [ 80, 'Open-Digger2'],
-            [ 100, 'Open-Digger1'],
+            [20, 'OpenGalaxy'],
+            [40, 'OpenPerf'],
+            [60, 'OpenTalent'],
+            [80, 'Hypercrx'],
+            [ 80, 'Open-Hypertrons'],
+            [ 100, 'OpenDigger'],
 
           ]
         },
@@ -149,72 +149,139 @@ export default {
         ]
       })
     },
-    drawPieChart() {
-      let pieChart = this.$echarts.init(document.getElementById("pieChart"))
-      pieChart.setOption({
+    // drawPieChart() {
+    //   let pieChart = this.$echarts.init(document.getElementById("pieChart"))
+    //   pieChart.setOption({
+    //     color: this.tableColor,
+    //     series: [
+    //       {
+    //         name: '访问来源',
+    //         type: 'pie',
+    //         radius: ['60%', '90%'],
+    //         avoidLabelOverlap: false,
+    //         label: {
+    //           show: false,
+    //           position: 'center'
+    //         },
+    //         emphasis: {
+    //           label: {
+    //             show: true,
+    //             fontSize: '20',
+    //             fontWeight: 'bold'
+    //           }
+    //         },
+    //         labelLine: {
+    //           show: false
+    //         },
+    //         data: this.tableData.map((item, index) => ({
+    //               value: parseFloat(item.pct.replace('%', '') / 100),
+    //               name: item.label,
+    //             })
+    //         ),
+    //         itemStyle: {
+    //           normal: {
+    //             borderColor:'#fff',
+    //             borderWidth: 3
+    //           }
+    //         },
+    //       }
+    //     ]
+    //   })
+    // },
+    drawRadarChart() {
+      let chart = this.$echarts.init(document.getElementById("radarChart"))
+      chart.setOption({
+          // legend: {
+          //   data: ['Allocated Budget', 'Actual Spending']
+          // },
         color: this.tableColor,
+        tooltip: {
+          trigger: 'item'
+        },
+        radar: {
+          // shape: 'circle',
+          indicator: [
+            { name: 'Open Issue'},
+            { name: 'Issue Comment'},
+            { name: 'Open PR'},
+            { name: 'PR Comment'},
+            { name: 'PR Merged'},
+            { name: 'Star'},
+            { name: 'Fork'},
+          ]
+        },
         series: [
           {
-            name: '访问来源',
-            type: 'pie',
-            radius: ['60%', '90%'],
-            avoidLabelOverlap: false,
-            label: {
-              show: false,
-              position: 'center'
-            },
-            emphasis: {
-              label: {
-                show: true,
-                fontSize: '20',
-                fontWeight: 'bold'
-              }
-            },
-            labelLine: {
-              show: false
-            },
-            data: this.tableData.map((item, index) => ({
-                  value: parseFloat(item.pct.replace('%', '') / 100),
-                  name: item.label,
-                })
-            ),
-            itemStyle: {
-              normal: {
-                borderColor:'#fff',
-                borderWidth: 3
-              }
-            },
+            type: 'radar',
+            data: [
+              {
+                value: [100, 100, 100, 100, 100, 100, 100],
+                name: '领域标杆'
+              },
+              {
+                value: [80, 90, 94, 97, 85, 82, 80],
+                name: '全域平均'
+              },
+              {
+                value: [65, 68, 65, 63, 59, 65, 67],
+                name: '领域平均'
+              },
+              {
+                value: [50, 48, 49, 52, 53, 58, 59],
+                name: '本项目'
+              },
+            ]
           }
         ]
       })
-    }
+    },
   },
   mounted() {
     this.drawOrBarChart()
     this.drawSourceBarChart()
-    this.drawPieChart()
+    // this.drawPieChart()
+    this.drawRadarChart()
   },
   data () {
     return {
       tableColor: ['#14B8A6', '#3B82F6', '#6366F1', '#EC4899', '#F59E0B', '#FACC15'],
+      // tableData: [
+      //   {
+      //     content: 'Label1',
+      //     label: '代码',
+      //     pct: '42.9%'
+      //   },
+      //   {
+      //     content: 'Label2',
+      //     label: '评审',
+      //     pct: '28.6%'
+      //   },
+      //   {
+      //     content: 'Label3',
+      //     label: '协作',
+      //     pct: '28.5%'
+      //   },
+      // ]
       tableData: [
         {
           color: 1,
-          content: 'Label1',
-          label: '代码',
-          pct: '42.9%'
+          label: '领域标杆',
+          value: 100
         },
         {
           color: 2,
-          content: 'Label2',
-          label: '评审',
-          pct: '28.6%'
+          label: '全域平均',
+          value: 80
         },
         {
           color: 3,
-          content: 'Label3',
-          label: '协作',
-          pct: '28.5%'
+          label: '领域平均',
+          value: 60
+        },
+        {
+          color: 4,
+          label: '本项目',
+          value: 40
         },
       ]
     }
@@ -328,23 +395,24 @@ export default {
       <el-row :gutter="20" style="width: 100%;">
         <el-col :span="12">
           <el-card class="card">
-            <div style="height: 235px">
-              <div class="title">贡献能力</div>
-              <div style="height: 190px">
-                <div id="pieChart" style="height: 100%; width: 50%; display: inline-block;"></div>
+            <div style="height: 240px">
+              <div class="title">贡献类别</div>
+              <div style="height: 190px" class="category">
+<!--                <div id="pieChart" style="height: 100%; width: 50%; display: inline-block;"></div>-->
+                <div id="radarChart" style="height: 100%; width: 50%; display: inline-block;"></div>
+
                 <div style="height: 100%; width: 50%; display: inline-block;">
                   <el-table :data="tableData" style="width: 100%">
-                    <el-table-column prop="colorDot" label="" width="50">
+                    <el-table-column prop="colorDot" label="98" width="50">
                       <template slot-scope="scope">
                         <span :style="{ backgroundColor: tableColor[scope.row.color - 1], width: '10px', height: '10px', display: 'inline-block', borderRadius: '50%', marginRight: '8px' }"></span>
                       </template>
                     </el-table-column>
-                    <el-table-column prop="content" label="贡献内容" width="150">
+                    <el-table-column prop="label" label="范围" width="150">
                     </el-table-column>
-                    <el-table-column prop="label" label="标签" width="90">
+                    <el-table-column prop="value" label="贡献指数">
                     </el-table-column>
-                    <el-table-column prop="pct" label="%">
-                    </el-table-column>
+
                   </el-table>
                 </div>
               </div>
@@ -366,7 +434,11 @@ export default {
 
 </template>
 
-<style scoped>
+<style>
+.category .el-table .el-table__cell {
+  padding: 8px 0 !important;
+}
+
 .member-profile{
   background-color: #F8F8F8
 }

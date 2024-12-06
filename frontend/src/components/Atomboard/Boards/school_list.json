@@ -1,0 +1,73 @@
+[{
+  "id": "1",
+  "name": "华中科学大学",
+  "openRank": 67.3,
+  "openRankDelta": 43.57,
+  "stuCount": 21,
+  "stuDelta": 3,
+  "avropenRank": 3.21,
+  "avropenRankDelta": 1.89
+}, {
+  "id": "2",
+  "name": "浙江大学",
+  "openRank": 61.23,
+  "openRankDelta": -16.92,
+  "stuCount": 23,
+  "stuDelta": 3,
+  "avropenRank": 2.66,
+  "avropenRankDelta": -2.9
+}, {
+  "id": "3",
+  "name": "北京邮电大学",
+  "openRank": 60.19,
+  "openRankDelta": -35.17,
+  "stuCount": 27,
+  "stuDelta": -5,
+  "avropenRank": 2.23,
+  "avropenRankDelta": -0.75
+},{
+  "id": "4",
+  "name": "华中科学大学",
+  "openRank": 67.3,
+  "openRankDelta": 43.57,
+  "stuCount": 21,
+  "stuDelta": 3,
+  "avropenRank": 3.21,
+  "avropenRankDelta": 1.89
+}, {
+  "id": "5",
+  "name": "浙江大学",
+  "openRank": 61.23,
+  "openRankDelta": -16.92,
+  "stuCount": 23,
+  "stuDelta": 3,
+  "avropenRank": 2.66,
+  "avropenRankDelta": -2.9
+}, {
+  "id": "6",
+  "name": "北京邮电大学",
+  "openRank": 60.19,
+  "openRankDelta": -35.17,
+  "stuCount": 27,
+  "stuDelta": -5,
+  "avropenRank": 2.23,
+  "avropenRankDelta": -0.75
+}, {
+  "id": "7",
+  "name": "浙江大学",
+  "openRank": 61.23,
+  "openRankDelta": -16.92,
+  "stuCount": 23,
+  "stuDelta": 3,
+  "avropenRank": 2.66,
+  "avropenRankDelta": -2.9
+}, {
+  "id": "8",
+  "name": "北京邮电大学",
+  "openRank": 60.19,
+  "openRankDelta": -35.17,
+  "stuCount": 27,
+  "stuDelta": -5,
+  "avropenRank": 2.23,
+  "avropenRankDelta": -0.75
+}]

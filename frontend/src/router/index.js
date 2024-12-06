@@ -8,6 +8,7 @@ import MemberProfile from "@/views/MemberProfile.vue";
 import MemberList from '@/views/MemberList.vue'
 import OrgRankList from "@/views/OrgRankList.vue";
 import OrgLogin from '@/views/OrgLogin.vue'
+import Atomboard from "@/views/Atomboard.vue";
 
 Vue.use(VueRouter)
 
@@ -74,6 +75,11 @@ const routes = [
     name: 'OrgLogin',
     component: OrgLogin,
   },
+  {
+    path: '/atomboard',
+    name: 'Atomboard',
+    component: Atomboard,
+  }
 ]
 
 const router = new VueRouter({
@@ -83,7 +89,7 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ['RankList', 'OrgRankList', 'OrgRegister', 'MemberRegister', 'OrgLogin', 'MemberProfile'];
+  const publicPages = ['RankList', 'OrgRankList', 'OrgRegister', 'MemberRegister', 'OrgLogin', 'MemberProfile','Atomboard'];
   const authRequired = !publicPages.includes(to.name);
   const loggedIn = localStorage.getItem('token');
 
