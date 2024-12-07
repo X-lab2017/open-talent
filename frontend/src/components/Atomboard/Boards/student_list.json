@@ -21,44 +21,65 @@
   "month": 19
 },{
   "id": "4",
-  "name": "王**",
-  "openRank": 50.361,
-  "school": "复旦大学",
-  "comm": "Apache HugeGraph",
-  "month": 16
+  "name": "孟**",
+  "openRank": 35.52,
+  "school": "重庆邮电大学",
+  "comm": "Apache SkyWalking",
+  "month": 18
 },{
   "id": "5",
-  "name": "潘**",
-  "openRank": 44.955,
-  "school": "上海交通大学",
-  "comm": "MatrixOne",
-  "month": 19
+  "name": "刘**",
+  "openRank": 25.838,
+  "school": "西安电子科技大学",
+  "comm": "OpenMessaging",
+  "month": 10
 },{
   "id": "6",
-  "name": "姬**",
-  "openRank": 39.475,
-  "school": "陇东学院",
-  "comm": "Spring Cloud Alibaba",
-  "month": 19
+  "name": "王**",
+  "openRank": 25.15,
+  "school": "电子科技大学",
+  "comm": "MegEngine（旷视天元）",
+  "month": 13
 },{
   "id": "7",
-  "name": "王**",
-  "openRank": 50.361,
-  "school": "复旦大学",
-  "comm": "Apache HugeGraph",
-  "month": 16
+  "name": "谭**",
+  "openRank": 24.831,
+  "school": "华中科技大学",
+  "comm": "GraphScope",
+  "month": 12
 },{
   "id": "8",
-  "name": "潘**",
-  "openRank": 44.955,
-  "school": "上海交通大学",
-  "comm": "MatrixOne",
-  "month": 19
+  "name": "张**",
+  "openRank": 19.65,
+  "school": "西安电子科技大学",
+  "comm": "泰晓科技",
+  "month": 9
 },{
   "id": "9",
-  "name": "姬**",
-  "openRank": 39.475,
-  "school": "陇东学院",
-  "comm": "Spring Cloud Alibaba",
-  "month": 19
+  "name": "乔**",
+  "openRank": 19.016,
+  "school": "武汉大学",
+  "comm": "Apache RocketMQ社区",
+  "month": 14
+},{
+  "id": "10",
+  "name": "周**",
+  "openRank": 18.924,
+  "school": "中国科学院大学",
+  "comm": "openEuler社区",
+  "month": 9
+},{
+  "id": "11",
+  "name": "黄**",
+  "openRank": 18.115,
+  "school": "成都信息工程大学",
+  "comm": "CuberFS",
+  "month": 15
+},{
+  "id": "12",
+  "name": "朱**",
+  "openRank": 17.194,
+  "school": "华东师范大学",
+  "comm": "OpenDigger",
+  "month": 14
 }]

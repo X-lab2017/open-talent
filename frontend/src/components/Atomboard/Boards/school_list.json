@@ -27,47 +27,74 @@
   "avropenRankDelta": -0.75
 },{
   "id": "4",
-  "name": "华中科学大学",
-  "openRank": 67.3,
-  "openRankDelta": 43.57,
-  "stuCount": 21,
-  "stuDelta": 3,
-  "avropenRank": 3.21,
-  "avropenRankDelta": 1.89
+  "name": "西安电子科技大学",
+  "openRank": 60.05,
+  "openRankDelta": 37.86,
+  "stuCount": 13,
+  "stuDelta": 4,
+  "avropenRank": 4.62,
+  "avropenRankDelta": 2.15
 }, {
   "id": "5",
-  "name": "浙江大学",
-  "openRank": 61.23,
-  "openRankDelta": -16.92,
-  "stuCount": 23,
-  "stuDelta": 3,
-  "avropenRank": 2.66,
-  "avropenRankDelta": -2.9
+  "name": "复旦大学",
+  "openRank": 59.7,
+  "openRankDelta": 7.51,
+  "stuCount": 4,
+  "stuDelta": -8,
+  "avropenRank": 14.93,
+  "avropenRankDelta": 10.58
 }, {
   "id": "6",
-  "name": "北京邮电大学",
-  "openRank": 60.19,
-  "openRankDelta": -35.17,
-  "stuCount": 27,
-  "stuDelta": -5,
-  "avropenRank": 2.23,
-  "avropenRankDelta": -0.75
+  "name": "西安邮电大学",
+  "openRank": 55.67,
+  "openRankDelta": 24.09,
+  "stuCount": 10,
+  "stuDelta": -3,
+  "avropenRank": 5.57,
+  "avropenRankDelta": 3.14
 }, {
   "id": "7",
-  "name": "浙江大学",
-  "openRank": 61.23,
-  "openRankDelta": -16.92,
-  "stuCount": 23,
-  "stuDelta": 3,
-  "avropenRank": 2.66,
-  "avropenRankDelta": -2.9
+  "name": "华东师范大学",
+  "openRank": 54.15,
+  "openRankDelta": -19.2,
+  "stuCount": 13,
+  "stuDelta": 2,
+  "avropenRank": 4.17,
+  "avropenRankDelta": -2.5
 }, {
   "id": "8",
-  "name": "北京邮电大学",
-  "openRank": 60.19,
-  "openRankDelta": -35.17,
-  "stuCount": 27,
-  "stuDelta": -5,
-  "avropenRank": 2.23,
-  "avropenRankDelta": -0.75
+  "name": "电子科技大学",
+  "openRank": 50.6,
+  "openRankDelta": 35.74,
+  "stuCount": 14,
+  "stuDelta": 8,
+  "avropenRank": 3.62,
+  "avropenRankDelta": 1.14
+}, {
+  "id": "9",
+  "name": "重庆邮电大学",
+  "openRank": 48.92,
+  "openRankDelta": 24.29,
+  "stuCount": 5,
+  "stuDelta": 3,
+  "avropenRank": 9.78,
+  "avropenRankDelta": -2.53
+}, {
+  "id": "10",
+  "name": "上海交通大学",
+  "openRank": 48.34,
+  "openRankDelta": 40.83,
+  "stuCount": 6,
+  "stuDelta": 1,
+  "avropenRank": 8.06,
+  "avropenRankDelta": 6.8
+}, {
+  "id": "11",
+  "name": "杭州电子科技大学",
+  "openRank": 41.99,
+  "openRankDelta": 34.6,
+  "stuCount": 11,
+  "stuDelta": 8,
+  "avropenRank": 3.82,
+  "avropenRankDelta": 1.35
 }]
