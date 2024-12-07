@@ -41,7 +41,6 @@
                 <el-button
                     type="text"
                     icon="el-icon-caret-top"
-                    plain
                     @click="setSortOrder('asc')"
                     :class="{ active: sortOrder === 'asc' }"
                 ></el-button>
@@ -53,16 +52,18 @@
                 ></el-button>
               </template>
               <template slot-scope="scope">
+                {{ randomValues[scope.row.memberId].openrankRandom }}
+                <img :src="scope.row.openrankValue > randomValues[scope.row.memberId].openrankRandom ? 
+                require('@/assets/increase.svg') : require('@/assets/decrease.svg')" style="margin: 0 7px">
                 {{ scope.row.openrankValue }}
-                <img src="../assets/increase.svg" style="margin: 0 7px">
-                10.0
               </template>
             </el-table-column>
             <el-table-column prop="activeMonths" label="活跃月数">
               <template slot-scope="scope">
-                {{ scope.row.openrankValue }}
-                <img src="../assets/decrease.svg" style="margin: 0 7px">
-                10.0
+                {{ randomValues[scope.row.memberId].activeMonthsRandom }}
+                <img :src="scope.row.activeMonths > randomValues[scope.row.memberId].activeMonthsRandom ? 
+                require('@/assets/increase.svg') : require('@/assets/decrease.svg')" style="margin: 0 7px">
+                {{ scope.row.activeMonths }}
               </template>
             </el-table-column>
             <el-table-column label="详情页面">
@@ -121,6 +122,7 @@ export default {
       currentPage: 1,
       pageSize: 10,
       sortOrder: "desc", // 默认降序
+      randomValues: {} // 新增：随机生成，并在前端显示每个成员的openrank和活跃月数变化后的值
     };
   },
   computed: {
@@ -177,6 +179,10 @@ export default {
           this.members.sort((a, b) => b.openrankValue - a.openrankValue);
           this.members.forEach((member, index) => {
             member.rank = index + 1; // 分配排名，从1开始
+            this.randomValues[member.memberId] = {
+              openrankRandom: Math.floor(Math.random() * 60),
+              activeMonthsRandom: Math.floor(Math.random() * 60)
+            };
           });
         } else {
           console.error("成员数据格式不正确");
