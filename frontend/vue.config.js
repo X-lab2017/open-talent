@@ -13,5 +13,29 @@ module.exports = defineConfig({
         },
       }
     },
+  },
+  configureWebpack: {
+    module: {
+      rules: [
+        {
+          test: /\.(js|jsx|ts|tsx)$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                '@babel/preset-env',
+                '@babel/preset-flow',
+                ['@babel/preset-react',
+                {
+                  runtime: 'automatic', // 加上这行配置
+                },
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    }
   }
 })

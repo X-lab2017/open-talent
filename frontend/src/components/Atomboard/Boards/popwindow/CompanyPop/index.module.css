@@ -1,0 +1,43 @@
+.switch{
+    position: absolute;
+    display: flex;
+    top: -30px;
+    right: 0px;
+    width: 148px;
+    height: 28px;
+    border: 1px solid #CCE7FF;
+    border-radius: 6px ;
+}
+
+.option{
+    text-align: center;
+    width: 50%;
+    font-size: 16px;
+    color: #ffffff;
+    line-height: 28px;
+    cursor: pointer;
+}
+
+.links{
+    position: absolute;
+    cursor: pointer;
+    top: -26px;
+    left: 160px;
+    font-size: 14px;
+}
+
+.popupTitle {
+    margin: 0;
+    padding: 0;
+    height: 36px;
+    line-height: 36px;
+    color: rgba(204, 231, 255, 1);
+    font-weight: 700;
+    font-size: 20px;
+    color: #CCE7FF;
+  }
+
+.countryPop tbody td {
+    font-size: 14px;
+}
+  

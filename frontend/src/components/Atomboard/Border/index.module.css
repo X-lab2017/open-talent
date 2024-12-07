@@ -1,0 +1,34 @@
+.border {
+  position: absolute;
+  top: 50px;
+  left: 30px;
+}
+
+.arrowLeft {
+  position: absolute;
+  top: 62px;
+  left: 3325px;
+}
+
+.arrowRight {
+  position: absolute;
+  top: 62px;
+  left: 4629px;
+}
+
+.arrowAnimationLeft {
+  position: absolute;
+  width: 36px;
+  height: 24px;
+  top: 44px;
+  left: 601px;
+}
+
+.arrowAnimationRight {
+  position: absolute;
+  width: 36px;
+  height: 24px;
+  top: 44px;
+  left: 1258px;
+  transform: scaleX(-1);
+}

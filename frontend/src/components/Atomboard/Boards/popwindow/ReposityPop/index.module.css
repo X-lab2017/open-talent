@@ -1,0 +1,36 @@
+.reposityPop {
+  position: relative;
+}
+.reposityPop tbody td {
+  font-size: 14px;
+}
+
+
+.switch{
+  position: absolute;
+  display: flex;
+  top: -30px;
+  right: 20px;
+  width: 148px;
+  height: 28px;
+  border: 1px solid #CCE7FF;
+  border-radius: 6px ;
+}
+
+.option{
+  text-align: center;
+  width: 50%;
+  font-size: 16px;
+  color: #ffffff;
+  line-height: 28px;
+  cursor: pointer;
+}
+
+.links{
+  position: absolute;
+  cursor: pointer;
+  top: -26px;
+  left: 100px;
+  font-size: 14px;
+}
+

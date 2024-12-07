@@ -1,0 +1,17 @@
+.bg {
+  width: 1892px;
+  height: 1032px;
+  background-color: #070F1A;
+}
+
+.cellsLeft {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.cellsRight {
+  position: absolute;
+  left: 1174px;
+  top: 0;
+}

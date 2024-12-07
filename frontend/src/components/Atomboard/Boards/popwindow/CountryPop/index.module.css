@@ -1,0 +1,54 @@
+.countryPop {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+.countryPop::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 30;
+  width: 600px;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(175, 206, 232, 0) 0.04%, rgba(175, 206, 232, 0.6) 15.53%, rgba(175, 206, 232, 0.6) 72.98%, rgba(175, 206, 232, 0) 99.96%);
+  transform-origin: center center;
+  transform: translate(-50%, -50%) rotate(-90deg) ;
+}
+
+.countryPop>div {
+  flex: 1;
+}
+
+.countryPop>div:first-child {
+  margin-right: 60px;
+}
+
+.countryPop tbody td {
+  font-size: 14px;
+}
+
+.headerFont {
+  font-size: 15px; 
+  font-weight: bold;
+}
+
+.scroll::-webkit-scrollbar {
+  display:inherit;
+}
+/* 整个滚动条的宽度或高度 */
+.scroll::-webkit-scrollbar {
+  width: 2px; /* 适用于垂直滚动条 */
+}
+
+/* 滚动条轨道 */
+.scroll::-webkit-scrollbar-track {
+  background-color: inherit; /* 滚动条轨道的背景色 */
+}
+
+/* 滚动条滑块 */
+.scroll::-webkit-scrollbar-thumb {
+  background-color: #888; /* 滑块的颜色 */
+}
+

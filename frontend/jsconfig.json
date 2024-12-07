@@ -3,6 +3,7 @@
     "target": "es5",
     "module": "esnext",
     "baseUrl": "./",
+    "jsx": "react-jsx",
     "moduleResolution": "node",
     "paths": {
       "@/*": [
@@ -14,6 +15,8 @@
       "dom",
       "dom.iterable",
       "scripthost"
-    ]
+    ],
+    "allowImportingTsExtensions": true,
+
   }
 }

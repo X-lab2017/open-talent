@@ -7,6 +7,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import axios from "axios";
 import './assets/shared.css'
 import * as echarts from 'echarts'
+import {VuePlugin} from 'vuera'
 
 axios.defaults.baseURL = '/api'
 
@@ -14,6 +15,7 @@ Vue.prototype.$http=axios
 Vue.prototype.$echarts = echarts
 Vue.config.productionTip = false
 Vue.use(ElementUI)
+Vue.use(VuePlugin)
 
 // 添加 Axios 请求拦截器
 axios.interceptors.request.use(config => {
