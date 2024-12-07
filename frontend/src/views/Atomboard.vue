@@ -7,6 +7,8 @@
     },
     methods: {
       backToDetail() {
+        // 使用 transform scale
+        document.body.style.transform = '';
         this.$router.push({name: 'RankList'});
       }
     }
