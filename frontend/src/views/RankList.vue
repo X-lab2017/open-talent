@@ -263,7 +263,7 @@ export default {
 
 
 
-.filters {
+.rank-list .filters {
   display: flex;
   justify-content: center; /* 使过滤按钮居中 */
   text-align: center;

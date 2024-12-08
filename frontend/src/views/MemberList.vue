@@ -256,7 +256,7 @@ export default {
   width: 100%;
 }
 
-.filters {
+.member-list .filters {
   display: flex;
   justify-content: center;
   width: 30%;
