@@ -241,7 +241,7 @@ export default {
 };
 </script>
   
-<style scoped>
+<style>
 .member-list {
   display: flex;
   flex-direction: column;
@@ -274,5 +274,14 @@ export default {
   background: #131313; 
   border-color: #131313;
   color: #fff;
+}
+.el-table .el-table__row {
+  height: 50px;        /* 设置固定行高为100px */
+  line-height: 50px;   /* 设置行高为100px */
+}
+.el-table .even-row,
+.el-table .odd-row {
+  height: 50px;        /* 确保行高一致为100px */
+  line-height: 50px;   /* 确保行高一致为100px */
 }
 </style>
