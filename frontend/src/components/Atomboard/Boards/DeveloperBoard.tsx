@@ -81,7 +81,7 @@ export const DeveloperBoard = () => {
 
   return (
     <div style={{cursor:'pointer'}}>
-      <BaseBoard columns={generateColumns()} data={data.slice(0, 10)} />
+      <BaseBoard columns={generateColumns()} data={data.slice(0, 12)} />
     </div>
   )
 }
