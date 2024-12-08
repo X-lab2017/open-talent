@@ -349,12 +349,16 @@ export default {
   background-color:#213046 !important;
   color: #FFF;
   font-size: 16px;
+  height: 50px;        /* 添加固定行高 */
+  line-height: 50px;   /* 添加行高 */
 }
 
 .el-table .odd-row {
   background-color:#111E33 !important;
   color: #FFF;
   font-size: 16px;
+  height: 50px;        /* 添加固定行高 */
+  line-height: 50px;   /* 添加行高 */
 }
 
 .el-table tbody tr:hover>td {
