@@ -6,7 +6,7 @@
     <!-- Main Content -->
     <div>
       <el-main>
-        <h2 class="title">组织贡献度排行榜</h2>
+        <h2 class="title" style="font-size: 24px; margin-bottom: 30px;">高校贡献度排行榜</h2>
         <div style="margin: 0 30px">
           <el-table
               :row-class-name="tableRowClassName"

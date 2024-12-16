@@ -44,8 +44,8 @@
           <el-col :span="24">
             <el-form-item label="平台权重">
               <el-radio-group v-model="form.category2">
-                <el-radio label="全球化模式：1:1:1">全球化模式（GitHub,GItee,Atomgit）：1:1:1</el-radio>
-                <el-radio label="中国优先模式：2:2:1">中国优先模式（Gitee,Atomgit,GItHub）：2:2:1</el-radio>
+                <el-radio label="全球化模式：1:1:1" style="margin-bottom: 10px;">全球化模式（GitHub,GItee,Atomgit）：1:1:1</el-radio>
+                <el-radio label="中国优先模式：2:2:1" style="margin-bottom: 10px;">中国优先模式（Gitee,Atomgit,GItHub）：2:2:1</el-radio>
                 <el-radio label="基金会优先模式：5:3:2">基金会优先模式（Atomgit, Gitee, GitHub）：5:3:2</el-radio>
               </el-radio-group>
             </el-form-item>
@@ -85,7 +85,7 @@
 
         <el-row justify="center">
           <el-col :span="24" class="button-group">
-            <el-button type="primary" plain>返回</el-button>
+            <!-- <el-button type="primary" plain>返回</el-button> -->
             <!-- <el-button type="primary" native-type="submit">完成注册</el-button> -->
             <el-button type="primary" v-on:click="submitForm">完成注册</el-button>
           </el-col>

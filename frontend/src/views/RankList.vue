@@ -6,7 +6,7 @@
     <!-- Main Content -->
     <div>
       <el-main>
-        <h2 class="title">成员贡献度排行榜</h2>
+        <h2 class="title" style="font-size: 24px; margin-bottom: 30px;">成员贡献度排行榜</h2>
         <div class="filters">
           <el-select
               v-model="orgFilter"
@@ -308,30 +308,30 @@ export default {
   margin-bottom: 10px;
 }
 
-.el-button--primary {
+.rank-list .el-button--primary {
   color: #fff;
   background-color: #131313;
   border-color: #cdcdcd;
 }
 
-.el-button--primary:focus,
-.el-button--primary:hover {
-  background: #e8e8e8;
+.rank-list .el-button--primary:focus,
+.rank-list .el-button--primary:hover {
+  background: #131313;
   border-color: #131313;
-  color: #131313;
+  color: #fff;
 }
 
-.el-button--primary.is-plain {
-  color: #5f5f5f;
+.rank-list .el-button--primary.is-plain {
+  color: #131313;
   background: #fff;
   border-color: #cdcdcd;
 }
 
-.el-button--primary.is-plain:focus,
-.el-button--primary.is-plain:hover {
-  background: #131313;
-  border-color: #131313;
-  color: #fff;
+.rank-list .el-button--primary.is-plain:focus,
+.rank-list .el-button--primary.is-plain:hover {
+  background: #fff;
+  border-color: #cdcdcd;
+  color: #131313;
 }
 
 
