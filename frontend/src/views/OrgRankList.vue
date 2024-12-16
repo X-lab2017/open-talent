@@ -1,5 +1,5 @@
 <template>
-  <div class="rank-list">
+  <div class="org-rank-list">
     <!-- Header -->
     <NavMenu></NavMenu>
 
@@ -209,18 +209,18 @@ export default {
 
 
 <style>
-.rank-list {
+.org-rank-list {
   justify-content: center; /* 水平居中 */
   text-align: center;
 
 }
 
-.rank-list .title{
+.org-rank-list .title{
   color: #ACC5DB;
   margin: 0 auto;
 }
 
-.rank-list .el-main{
+.org-rank-list .el-main{
   display: inline-block;
   background-color: #111E33; /* 深蓝色背景 */
   border-radius: 15px; /* 圆角半径 */
@@ -256,7 +256,7 @@ export default {
   width: 100%; /* 确保主内容占满宽度 */
 }
 
-.filters {
+.org-rank-list .filters {
   display: flex;
   justify-content: center; /* 使过滤按钮居中 */
   text-align: center;
@@ -341,11 +341,11 @@ export default {
   background-color: #111E33 !important;
 }
 
-.el-table td.el-table__cell, .el-table th.el-table__cell.is-leaf {
+.org-rank-list .el-table td.el-table__cell, .el-table th.el-table__cell.is-leaf {
   border-bottom: 1px solid #FFF;
 }
 
-.el-table .even-row {
+.org-rank-list .el-table .even-row {
   background-color:#213046 !important;
   color: #FFF;
   font-size: 16px;
@@ -353,7 +353,7 @@ export default {
   line-height: 50px;   /* 添加行高 */
 }
 
-.el-table .odd-row {
+.org-rank-list .el-table .odd-row {
   background-color:#111E33 !important;
   color: #FFF;
   font-size: 16px;
@@ -361,7 +361,7 @@ export default {
   line-height: 50px;   /* 添加行高 */
 }
 
-.el-table tbody tr:hover>td {
+.org-rank-list .el-table tbody tr:hover>td {
   background-color: transparent !important;
 }
 </style>

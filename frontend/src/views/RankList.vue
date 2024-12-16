@@ -33,8 +33,8 @@
               style="width: 100%"
               size="medium"
           >
-            <el-table-column prop="rank" label="排名"></el-table-column>
-            <el-table-column prop="name" label="姓名"></el-table-column>
+            <el-table-column prop="rank" label="排名" width="80"></el-table-column>
+            <el-table-column prop="name" label="姓名" width="80"></el-table-column>
             <el-table-column prop="openrankValue" label="OpenRank">
               <template slot="header">
                 <span>OpenRank</span>
@@ -52,22 +52,30 @@
                 ></el-button>
               </template>
               <template slot-scope="scope">
-                {{ randomValues[scope.row.memberId].openrankRandom }}
-                <img :src="scope.row.openrankValue > randomValues[scope.row.memberId].openrankRandom ? 
+                {{ scope.row.lastOpenrank }}
+                <img :src="scope.row.openrankValue > scope.row.lastOpenrank ? 
                 require('@/assets/increase.svg') : require('@/assets/decrease.svg')" style="margin: 0 7px">
                 {{ scope.row.openrankValue }}
               </template>
             </el-table-column>
-            <el-table-column prop="activeMonths" label="活跃月数">
+            <el-table-column prop="organization" label="学校">
               <template slot-scope="scope">
-                {{ randomValues[scope.row.memberId].activeMonthsRandom }}
-                <img :src="scope.row.activeMonths > randomValues[scope.row.memberId].activeMonthsRandom ? 
-                require('@/assets/increase.svg') : require('@/assets/decrease.svg')" style="margin: 0 7px">
+                {{ scope.row.organization }}
+              </template>
+            </el-table-column>
+            <el-table-column prop="community" label="参与社区">
+              <template slot-scope="scope">
+                {{ scope.row.community }}
+              </template>
+            </el-table-column>
+            <el-table-column prop="activeMonths" label="活跃月数" width="100">
+              <template slot-scope="scope">
                 {{ scope.row.activeMonths }}
               </template>
             </el-table-column>
             <el-table-column label="详情页面">
-              <template slot-scope="scope">
+              <!-- <template slot-scope="scope"> -->
+              <template>
                 <el-button
                     type="primary"
                     size="mini"
@@ -122,7 +130,7 @@ export default {
       currentPage: 1,
       pageSize: 10,
       sortOrder: "desc", // 默认降序
-      randomValues: {} // 新增：随机生成，并在前端显示每个成员的openrank和活跃月数变化后的值
+      // randomValues: {} // 新增：随机生成，并在前端显示每个成员的openrank和活跃月数变化后的值
     };
   },
   computed: {
@@ -147,9 +155,9 @@ export default {
     },
   },
   methods: {
-      fetchOrganizations() {
-      // 从服务端获取组织列表
-      this.$http.get("/org/search").then((response) => {
+    async fetchOrganizations() {
+      try {
+        const response = await this.$http.get("/org/search");
         console.log("组织数据：", response.data); // 调试输出
         const organizations = response.data.data; // 获取实际的组织列表
         if (organizations && organizations.length > 0) {
@@ -157,13 +165,15 @@ export default {
         } else {
           console.error("组织数据为空或格式不正确");
         }
-      }).catch(error => {
+      } catch (error) {
         console.error("获取组织数据失败：", error);
-      });
+      }
     },
-    fetchMembers() {
-      // 从服务端获取成员列表
-      this.$http.get("/member/search").then((response) => {
+    async fetchMembers() {
+      try {
+        // 确保组织数据已经加载完毕
+        await this.fetchOrganizations();
+        const response = await this.$http.get("/member/search");
         console.log("成员数据：", response.data); // 调试输出
         const members = response.data.data; // 假设返回的数据结构是 { code, msg, data }
         if (Array.isArray(members)) {
@@ -179,19 +189,15 @@ export default {
           this.members.sort((a, b) => b.openrankValue - a.openrankValue);
           this.members.forEach((member, index) => {
             member.rank = index + 1; // 分配排名，从1开始
-            this.randomValues[member.memberId] = {
-              openrankRandom: Math.floor(Math.random() * 60),
-              activeMonthsRandom: Math.floor(Math.random() * 60)
-            };
           });
         } else {
           console.error("成员数据格式不正确");
           this.members = []; // 确保 members 始终是一个数组
         }
-      }).catch(error => {
+      } catch (error) {
         console.error("获取成员数据失败：", error);
         this.members = []; // 确保在错误情况下 members 也是一个数组
-      });
+      }
     },
     searchMembers() {
       this.currentPage = 1; // 重置到第一页
@@ -240,6 +246,8 @@ export default {
 .rank-list {
   display: flex;
   flex-direction: column;
+  justify-content: center; /* 水平居中 */
+  text-align: center;
 }
 
 .el-header {
@@ -268,6 +276,17 @@ export default {
   justify-content: center; /* 使过滤按钮居中 */
   text-align: center;
   margin-bottom: 20px; /* 添加一些底部间距 */
+}
+.rank-list .title{
+  color: #ACC5DB;
+  margin: 0 auto;
+}
+.rank-list .el-main{
+  display: inline-block;
+  background-color: #111E33; /* 深蓝色背景 */
+  border-radius: 15px; /* 圆角半径 */
+  padding: 50px 0;
+  width: 70%;
 }
 
 .el-footer {
@@ -348,11 +367,11 @@ export default {
   background-color: #111E33 !important;
 }
 
-.el-table td.el-table__cell, .el-table th.el-table__cell.is-leaf {
+.rank-list .el-table td.el-table__cell, .el-table th.el-table__cell.is-leaf {
   border-bottom: 1px solid #FFF;
 }
 
-.el-table .even-row {
+.rank-list .el-table .even-row {
   background-color:#213046 !important;
   color: #FFF;
   font-size: 16px;
@@ -360,7 +379,7 @@ export default {
   line-height: 50px;   /* 添加行高 */
 }
 
-.el-table .odd-row {
+.rank-list .el-table .odd-row {
   background-color:#111E33 !important;
   color: #FFF;
   font-size: 16px;
@@ -368,7 +387,7 @@ export default {
   line-height: 50px;   /* 添加行高 */
 }
 
-.el-table tbody tr:hover>td {
+.rank-list .el-table tbody tr:hover>td {
   background-color: transparent !important;
 }
 </style>
