@@ -18,7 +18,8 @@ public class Member {
     private String atomgitAccount;
     private String contactEmail;
     private String contactAddress;
-    private Integer openrankValue;
+    private Float openrankValue;
+    private Float lastOpenrank;
     private String community;
     private Integer activeMonths;
 }
