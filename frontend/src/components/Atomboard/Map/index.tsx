@@ -49,7 +49,33 @@ export const MapBoard = () => {
                     color: "#fff",
                 },
             },
-            tooltip: {},
+            // tooltip:{},
+            tooltip: {
+                trigger: 'item',
+                formatter: function (params){
+                    var res = `
+                        <div style="width: 130px">
+                        <div style="margin-left: 5px; margin-bottom: 10px">${params.seriesName}</div>
+                        <div style="display: flex; justify-content: center; margin-left: 5px;" >
+
+                            <div
+                                style="display: inline-block;
+                                width: 10px;
+                                height: 10px;
+                                margin-top: 5px;
+                                margin-right: 10px;
+                                border-radius: 50%;
+                                background-color: ${params.color}"
+                            ></div>
+                            <span>${params.name}</span>
+                            <span style="margin-left: auto;">${params.value[2]}</span>
+                        </div>
+                        </div>
+
+                    `
+                    return res
+                }
+            },
             legend: {
                 left: "left",
                 data: ["强", "中", "弱"],
@@ -112,24 +138,26 @@ export const MapBoard = () => {
                     type: "scatter",
                     coordinateSystem: "geo",
                     data: convertData(data),
-                    symbolSize: (val) => val[2] / 20,
+                    symbolSize: (val) => val[2] / 8,
                     label: {
                         normal: { formatter: "{b}", position: "right", show: false },
                         emphasis: { show: true },
                     },
                     itemStyle: { normal: { color: "#ddb926" } },
+
                 },
                 {
                     name: "前5",
                     type: "effectScatter",
                     coordinateSystem: "geo",
-                    data: convertData(data.sort((a, b) => b.value - a.value).slice(0, 6)),
-                    symbolSize: (val) => val[2] / 20,
+                    // data: convertData(data.sort((a, b) => b.value - a.value).slice(0, 5)),
+                    data: convertData(data.sort((a, b) => b.value - a.value).slice(0, 5)),
+                    symbolSize: (val) => val[2] / 8,
                     showEffectOn: "render",
                     rippleEffect: { brushType: "stroke" },
                     hoverAnimation: true,
                     label: {
-                        normal: { formatter: "{b}", position: "right", show: true },
+                        normal: { formatter:"{b}", position: "right", show: true },
                     },
                     itemStyle: {
                         normal: {
