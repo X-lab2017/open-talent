@@ -2,7 +2,7 @@
   <div class="member-list">
     <NavMenu></NavMenu>
     <el-main>
-      <h2 class="title">成员列表</h2>
+      <h2 class="title" style="text-align: center;">成员列表</h2>
       <div class="filters">
         <el-select
           v-model="searchQuery"
@@ -259,29 +259,32 @@ export default {
 .member-list .filters {
   display: flex;
   justify-content: center;
-  width: 30%;
+  width: 100%;
   margin-bottom: 20px;
 }
 /* 新增样式 */
-.el-button--primary {
+.member-list .el-button--primary {
   color: #fff;
   background-color: #131313; 
   border-color: #131313;
 }
 
-.el-button--primary:focus,
-.el-button--primary:hover {
+.member-list .el-button--primary:focus,
+.member-list .el-button--primary:hover {
   background: #131313; 
   border-color: #131313;
   color: #fff;
 }
-.el-table .el-table__row {
+.member-list .el-table .el-table__row {
   height: 50px;        /* 设置固定行高为100px */
   line-height: 50px;   /* 设置行高为100px */
 }
-.el-table .even-row,
-.el-table .odd-row {
+.member-list .el-table .even-row,
+.member-list .el-table .odd-row {
   height: 50px;        /* 确保行高一致为100px */
   line-height: 50px;   /* 确保行高一致为100px */
+}
+.member-list .el-table th {
+  color: #000; /* 设置表头字体颜色为黑色 */
 }
 </style>

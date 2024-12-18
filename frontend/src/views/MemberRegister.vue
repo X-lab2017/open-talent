@@ -81,7 +81,7 @@
 
         <el-row justify="center">
           <el-col :span="24" class="button-group">
-            <el-button type="primary" plain v-on:click="goToOrgRegister">返回</el-button>
+            <!-- <el-button type="primary" plain v-on:click="goToOrgRegister">返回</el-button> -->
             <el-button type="primary" v-on:click="submitForm">完成注册</el-button>
           </el-col>
         </el-row>

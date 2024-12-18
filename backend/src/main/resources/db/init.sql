@@ -40,7 +40,8 @@ CREATE TABLE `members` (
     atomgit_account VARCHAR(100),
     contact_email VARCHAR(255),
     contact_address VARCHAR(255),
-    openrank_value INT,
+    openrank_value FLOAT,
+    last_openrank FLOAT,
     community VARCHAR(255),
     active_months INT,
     FOREIGN KEY (organization_id) REFERENCES organizations (organization_id)
