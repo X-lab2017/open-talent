@@ -65,6 +65,12 @@ export default {
         this.$router.push({name: 'Atomboard'})
       }
     },
+    goToHome() {
+      const currentRouteName = this.$route.name;
+      if (currentRouteName !== 'Home') {
+        this.$router.push({name: 'Home'})
+      }
+    },
     logout() {
       localStorage.removeItem('token'); // 移除 token
       this.$router.push({name: 'OrgLogin'}); // 跳转到登录页面
@@ -75,7 +81,7 @@ export default {
 
 <template>
   <el-header>
-    <div class="logo">
+    <div class="logo" v-on:click="goToHome">
       <img src="@/assets/headerlogo.png" alt="OpenTalent Logo" class="logo-image" />
       <span class="logo-text">OpenTalent</span>
     </div>

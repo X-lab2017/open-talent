@@ -134,7 +134,7 @@ export const CountryBoard = () => {
 
   return (
     <div>
-      <CountryTable columns={generateColumns()} data={data.slice(0, 10)} />
+      <CountryTable columns={generateColumns()} data={data.slice(0, 15)} />
       <div className={ styles.countryBoardFooterDiv } >
         {/* <span className={ styles.countryBoardFooterSpan }>
           * 主流协作平台注册账户去重后测算

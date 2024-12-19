@@ -97,4 +97,85 @@
   "stuDelta": 8,
   "avropenRank": 3.82,
   "avropenRankDelta": 1.35
+}, {
+  "id": "12",
+  "name": "陇东学院",
+  "openRank": 39.48,
+  "openRankDelta": 39.48,
+  "stuCount": 1,
+  "stuDelta": 1,
+  "avropenRank": 39.48,
+  "avropenRankDelta": 39.48
+}, {
+  "id": "13",
+  "name": "中国科学院大学",
+  "openRank": 37.36,
+  "openRankDelta": 23.15,
+  "stuCount": 18,
+  "stuDelta": 10,
+  "avropenRank": 2.08,
+  "avropenRankDelta": 0.3
+}, {
+  "id": "14",
+  "name": "南京大学",
+  "openRank": 33.9,
+  "openRankDelta": 32.41,
+  "stuCount": 17,
+  "stuDelta": 15,
+  "avropenRank": 1.99,
+  "avropenRankDelta": 1.25
+}, {
+  "id": "15",
+  "name": "同济大学",
+  "openRank": 21.35,
+  "openRankDelta": 15.98,
+  "stuCount": 6,
+  "stuDelta": 4,
+  "avropenRank": 3.56,
+  "avropenRankDelta": 0.87
+}, {
+  "id": "16",
+  "name": "武汉大学",
+  "openRank": 19.02,
+  "openRankDelta": 11.33,
+  "stuCount": 1,
+  "stuDelta": -3,
+  "avropenRank": 19.02,
+  "avropenRankDelta": 17.09
+}, {
+  "id": "17",
+  "name": "东南大学",
+  "openRank": 41.99,
+  "openRankDelta": 18.57,
+  "stuCount": 8,
+  "stuDelta": 3,
+  "avropenRank": 6.17,
+  "avropenRankDelta": 6.17
+}, {
+  "id": "18",
+  "name": "北京工业大学",
+  "openRank": 18.52,
+  "openRankDelta": 18.52,
+  "stuCount": 3,
+  "stuDelta": 2,
+  "avropenRank": 6.17,
+  "avropenRankDelta": 6.17
+}, {
+  "id": "19",
+  "name": "成都信息工程大学",
+  "openRank": 18.11,
+  "openRankDelta": 18.11,
+  "stuCount": 1,
+  "stuDelta": 1,
+  "avropenRank": 18.11,
+  "avropenRankDelta": 18.11
+}, {
+  "id": "20",
+  "name": "福州大学",
+  "openRank": 16.21,
+  "openRankDelta": -8.01,
+  "stuCount": 5,
+  "stuDelta": 4,
+  "avropenRank": 3.24,
+  "avropenRankDelta": -20.88
 }]
