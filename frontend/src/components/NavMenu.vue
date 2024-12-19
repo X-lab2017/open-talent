@@ -133,6 +133,7 @@ export default {
 .logo {
   display: flex; /* 使 logo 和文字在同一行 */
   align-items: center; /* 垂直居中对齐 */
+  cursor: pointer;
 }
 .logo-text {
   font-size: 24px; /* 文字大小 */
