@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="home-page">
     <NavMenu></NavMenu>
     <div class="container">
       <div class="content">
@@ -61,11 +61,11 @@ export default {
 
 <style>
 
-.search-box .el-select {
+.home-page .search-box .el-select {
   width: 130px;
 }
 
-.search-box .el-input__inner {
+.home-page .search-box .el-input__inner {
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
   text-align: center;
@@ -76,14 +76,14 @@ export default {
   letter-spacing: 2px;
 }
 
-.search-box /deep/.el-select-dropdown__item.selected {
+.home-page .search-box /deep/.el-select-dropdown__item.selected {
   color: #6c63ff !important;
 }
 
-.el-select-dropdown__item{
+.home-page .el-select-dropdown__item{
   color:#6c63ff !important;
 }
-.container {
+.home-page .container {
   position: relative;
   height: 100vh;
   width: 100%;
@@ -93,22 +93,22 @@ export default {
   display: flex;
 }
 
-.content{
+.home-page .content{
   position: absolute;
   left: 10%;
   top: 5%;
 }
 
-.main-title {
+.home-page .main-title {
   font-size: 6rem;
   font-weight: bold;
   margin-bottom: 40px;
 }
-.main-title .highlight {
+.home-page .main-title .highlight {
   color: #6c63ff;
 }
 
-.rounded-line {
+.home-page .rounded-line {
   width: 100px;
   height: 3px;
   background-color: #FFF;
@@ -116,42 +116,42 @@ export default {
   overflow: hidden;
 }
 
-.sub-title {
+.home-page .sub-title {
   font-size: 1.6rem;
   margin-top: 30px;
   margin-bottom: 0px;
 }
 
-.description {
+.home-page .description {
   font-size: 1.1rem;
   opacity: 0.9;
   margin-bottom: 80px;
 }
 
-.slogan{
+.home-page .slogan{
   font-size: 1.3rem;
   opacity: 0.9;
   margin-bottom: 30px;
 }
 
-.powered-by{
+.home-page .powered-by{
   display: flex;
   align-items: center;
   letter-spacing: 1px;
 }
 
-.powered-logo{
+.home-page .powered-logo{
   height: 45px;
 }
 
-.short-line {
+.home-page .short-line {
   width: 1px;
   height: 30px;
   background-color: white;
   margin: 30px;
 }
 
-.search-box {
+.home-page .search-box {
   margin-top: 40px;
   margin-bottom: 40px;
   width: 660px;
@@ -163,7 +163,7 @@ export default {
   padding-left: 6px;
 }
 
-.transparent-input {
+.home-page .transparent-input {
   width: 520px;
   margin: 0 10px;
   border: none;
@@ -174,7 +174,7 @@ export default {
   box-shadow: none;
 }
 
-.transparent-input::placeholder {
+.home-page .transparent-input::placeholder {
   color: #FFF; /* 占位符文字颜色，可以根据需要调整 */
 }
 

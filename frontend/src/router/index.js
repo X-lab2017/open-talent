@@ -89,7 +89,7 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ['RankList', 'OrgRankList', 'OrgRegister', 'MemberRegister', 'OrgLogin', 'MemberProfile','Atomboard'];
+  const publicPages = ['Home','RankList', 'OrgRankList', 'OrgRegister', 'MemberRegister', 'OrgLogin', 'MemberProfile','Atomboard'];
   const authRequired = !publicPages.includes(to.name);
   const loggedIn = localStorage.getItem('token');
 
