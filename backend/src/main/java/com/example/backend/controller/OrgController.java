@@ -31,13 +31,14 @@ public class OrgController {
     }
 
     @PostMapping("/login")
-    public Result<Map<String, String>> login(@RequestBody Org org) {
+    public Result<Map<String, Object>> login(@RequestBody Org org) {
         Org existingOrg = orgServiceImpl.findByName(org.getName());
         if (existingOrg != null && existingOrg.getPassword().equals(org.getPassword())) {
             String token = JwtUtil.generateToken(existingOrg.getName());
-            Map<String, String> data = new HashMap<>();
+            Map<String, Object> data = new HashMap<>();
             data.put("token", token);
             data.put("name", existingOrg.getName());
+            data.put("organizationId", existingOrg.getOrganizationId());
             return Result.success(data);
         }
         return Result.error("用户名或密码错误");

@@ -5,9 +5,9 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/opentalent?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&zeroDateTimeBehavior=convertToNull
+    url: jdbc:mysql://localhost:3306/open-talent?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&zeroDateTimeBehavior=convertToNull
     username: root
-    password: HDX_sql123
+    password: root
 
 server:
   port: 8081
@@ -17,3 +17,11 @@ mybatis-plus:
   mapper-locations: classpath*:mapper/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# GitHub API配置
+github:
+  api:
+    base-url: https://api.github.com
+    token: ${GITHUB_TOKEN:}
+    timeout: 30000
+    per-page: 100

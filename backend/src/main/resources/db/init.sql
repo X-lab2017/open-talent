@@ -46,3 +46,14 @@ CREATE TABLE `members` (
     active_months INT,
     FOREIGN KEY (organization_id) REFERENCES organizations (organization_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- GitHub配置表
+CREATE TABLE `github_config` (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    course_id BIGINT NOT NULL COMMENT '课程ID',
+    github_token VARCHAR(500) NOT NULL COMMENT 'GitHub Token',
+    token_status VARCHAR(20) DEFAULT 'UNKNOWN' COMMENT 'Token状态: VALID, INVALID, UNKNOWN',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    UNIQUE KEY `uk_course_id` (course_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='GitHub配置表';
