@@ -47,9 +47,10 @@ export default {
             .post("/org/login", this.form)
             .then((response) => {
               if (response.data.code === "200") { // 确保响应码为成功
-                const { token, name } = response.data.data;
+                const { token, name, organizationId } = response.data.data;
                 localStorage.setItem("token", token);
                 localStorage.setItem("orgName", name); // 保存组织名
+                localStorage.setItem("organizationId", organizationId); // 保存组织ID
                 this.$router.push({ name: "MemberList" });
               } else {
                 this.$message.error("登录失败：" + response.data.msg);
