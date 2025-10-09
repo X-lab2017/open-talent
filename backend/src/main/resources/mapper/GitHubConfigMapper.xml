@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.backend.mapper.GitHubConfigMapper">
+
+    <resultMap id="BaseResultMap" type="com.example.backend.entity.GitHubConfig">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="courseId" column="course_id" jdbcType="BIGINT"/>
+        <result property="githubToken" column="github_token" jdbcType="VARCHAR"/>
+        <result property="tokenStatus" column="token_status" jdbcType="VARCHAR"/>
+        <result property="createdAt" column="created_at" jdbcType="TIMESTAMP"/>
+        <result property="updatedAt" column="updated_at" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, course_id, github_token, token_status, created_at, updated_at
+    </sql>
+
+    <!-- 根据课程ID查询GitHub配置 -->
+    <select id="findByCourseId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM github_config
+        WHERE course_id = #{courseId}
+    </select>
+
+    <!-- 检查课程是否已配置有效Token -->
+    <select id="hasValidTokenForCourse" parameterType="java.lang.Long" resultType="java.lang.Boolean">
+        SELECT COUNT(*) > 0
+        FROM github_config
+        WHERE course_id = #{courseId} AND token_status = 'VALID'
+    </select>
+
+    <!-- 根据课程ID获取Token -->
+    <select id="getTokenByCourseId" parameterType="java.lang.Long" resultType="java.lang.String">
+        SELECT github_token
+        FROM github_config
+        WHERE course_id = #{courseId} AND token_status = 'VALID'
+        LIMIT 1
+    </select>
+
+    <!-- 更新Token状态 -->
+    <update id="updateTokenStatus">
+        UPDATE github_config
+        SET token_status = #{tokenStatus}, updated_at = NOW()
+        WHERE id = #{id}
+    </update>
+
+</mapper>

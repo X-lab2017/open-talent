@@ -26,4 +26,11 @@ public interface MemberService {
     List<Member> getMembersByOrgName(String orgName);
 
     boolean isMemberInOrg(Integer memberId, String orgName);
+
+    /**
+     * 获取可以添加到指定课程的成员列表（排除已注册该课程的成员）
+     * @param courseId 课程ID
+     * @return 可添加的成员列表
+     */
+    List<Member> getAvailableMembersForCourse(Integer courseId);
 }

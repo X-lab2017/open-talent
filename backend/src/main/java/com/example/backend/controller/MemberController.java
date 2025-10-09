@@ -1,23 +1,21 @@
 package com.example.backend.controller;
 
 import com.alibaba.excel.util.IoUtils;
-import com.example.backend.common.JwtUtil;
 import com.example.backend.common.Result;
 import com.example.backend.entity.Member;
 import com.example.backend.model.BaseResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 import com.example.backend.service.MemberService;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.net.URLEncoder;
 import java.util.List;
 
 @RestController
 @RequestMapping("/member")
+@CrossOrigin(origins = "*")
 public class MemberController {
     @Autowired
     private MemberService memberServiceImpl;
@@ -55,8 +53,15 @@ public class MemberController {
     /**
      * 无JWT验证版本
      */
+    // @GetMapping("/search")
+    // public Result<List<Member>> searchMembers() {  // 新增的搜索接口
+    //     List<Member> members = memberServiceImpl.getAllMembers();
+    //     return Result.success(members);
+    // }
+
+    // 为前端/member/search路径添加映射
     @GetMapping("/search")
-    public Result<List<Member>> searchMembers() {  // 新增的搜索接口
+    public Result<List<Member>> searchMembersApi() {
         List<Member> members = memberServiceImpl.getAllMembers();
         return Result.success(members);
     }
@@ -71,6 +76,12 @@ public class MemberController {
     public Result editMember(@PathVariable Integer memberId, @RequestBody Member member) {
         memberServiceImpl.updateMember(memberId, member);
         return Result.success();
+    }
+
+    @GetMapping("/available/{courseId}")
+    public Result<List<Member>> getAvailableMembersForCourse(@PathVariable Integer courseId) {
+        List<Member> availableMembers = memberServiceImpl.getAvailableMembersForCourse(courseId);
+        return Result.success(availableMembers);
     }
     /**
      * JWT验证（~~~备用待测试，请勿删除！！！~~~）

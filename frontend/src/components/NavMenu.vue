@@ -74,6 +74,60 @@ export default {
     logout() {
       localStorage.removeItem('token'); // 移除 token
       this.$router.push({name: 'OrgLogin'}); // 跳转到登录页面
+    },
+    goToCourseManagement() {
+      const currentRouteName = this.$route.name;
+      if (currentRouteName !== 'CourseManagement') {
+        this.$router.push({name: 'CourseManagement'})
+      }
+    },
+    goToEvaluationConfig() {
+      const currentRouteName = this.$route.name;
+      if (currentRouteName !== 'EvaluationConfig') {
+        this.$router.push({name: 'EvaluationConfig'})
+      }
+    },
+    goToDataCollection() {
+      const currentRouteName = this.$route.name;
+      if (currentRouteName !== 'DataCollection') {
+        this.$router.push({name: 'DataCollection'})
+      }
+    },
+    goToScoreCalculation() {
+      const currentRouteName = this.$route.name;
+      if (currentRouteName !== 'ScoreCalculation') {
+        this.$router.push({name: 'ScoreCalculation'})
+      }
+    },
+    goToResultDisplay() {
+      const currentRouteName = this.$route.name;
+      if (currentRouteName !== 'ResultDisplay') {
+        this.$router.push({name: 'ResultDisplay'})
+      }
+    },
+    goToSystemSettings() {
+      const currentRouteName = this.$route.name;
+      if (currentRouteName !== 'SystemSettings') {
+        this.$router.push({name: 'SystemSettings'})
+      }
+    },
+    goToGitRepositoryManagement() {
+      const currentRouteName = this.$route.name;
+      if (currentRouteName !== 'GitRepositoryManagement') {
+        this.$router.push({name: 'GitRepositoryManagement'})
+      }
+    },
+    goToGitActivityMonitor() {
+      const currentRouteName = this.$route.name;
+      if (currentRouteName !== 'GitActivityMonitor') {
+        this.$router.push({name: 'GitActivityMonitor'})
+      }
+    },
+    goToContributionAnalytics() {
+      const currentRouteName = this.$route.name;
+      if (currentRouteName !== 'ContributionAnalytics') {
+        this.$router.push({name: 'ContributionAnalytics'})
+      }
     }
   }
 }
@@ -90,6 +144,58 @@ export default {
       <el-menu-item v-on:click="goToOrgRankList">高校贡献度排行榜</el-menu-item>
       <el-menu-item v-on:click="goToAtomboard">中国高校开源贡献全景图</el-menu-item>
       <el-menu-item v-if="isLoggedIn" v-on:click="goToMemberList">成员列表</el-menu-item>
+      
+      <!-- 学生贡献度计算模块 -->
+      <el-submenu v-if="isLoggedIn" index="contribution">
+        <template slot="title">
+          <i class="el-icon-data-analysis"></i>
+          <span>贡献度计算</span>
+        </template>
+        <el-menu-item index="/course-management" @click="goToCourseManagement">
+          <i class="el-icon-notebook-1"></i>
+          <span slot="title">课程管理</span>
+        </el-menu-item>
+        <el-menu-item index="/evaluation-config" @click="goToEvaluationConfig">
+          <i class="el-icon-setting"></i>
+          <span slot="title">评价配置</span>
+        </el-menu-item>
+        <el-menu-item index="/data-collection" @click="goToDataCollection">
+          <i class="el-icon-download"></i>
+          <span slot="title">数据采集</span>
+        </el-menu-item>
+        <el-menu-item index="/score-calculation" @click="goToScoreCalculation">
+          <i class="el-icon-cpu"></i>
+          <span slot="title">评分计算</span>
+        </el-menu-item>
+        <el-menu-item index="/result-display" @click="goToResultDisplay">
+          <i class="el-icon-data-board"></i>
+          <span slot="title">结果展示</span>
+        </el-menu-item>
+        <el-menu-item index="/system-settings" @click="goToSystemSettings">
+          <i class="el-icon-tools"></i>
+          <span slot="title">系统设置</span>
+        </el-menu-item>
+      </el-submenu>
+      
+      <!-- Git管理模块 -->
+      <el-submenu v-if="isLoggedIn" index="git">
+        <template slot="title">
+          <i class="el-icon-folder-opened"></i>
+          <span>Git管理</span>
+        </template>
+        <el-menu-item index="/git-repository-management" @click="goToGitRepositoryManagement">
+          <i class="el-icon-folder"></i>
+          <span slot="title">仓库管理</span>
+        </el-menu-item>
+        <el-menu-item index="/git-activity-monitor" @click="goToGitActivityMonitor">
+          <i class="el-icon-view"></i>
+          <span slot="title">活动监控</span>
+        </el-menu-item>
+        <el-menu-item index="/contribution-analytics" @click="goToContributionAnalytics">
+          <i class="el-icon-pie-chart"></i>
+          <span slot="title">贡献分析</span>
+        </el-menu-item>
+      </el-submenu>
     </el-menu>
     <el-button-group>
       <el-button v-if="!isLoggedIn" 

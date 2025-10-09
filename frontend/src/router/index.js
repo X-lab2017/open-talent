@@ -79,7 +79,68 @@ const routes = [
     path: '/atomboard',
     name: 'Atomboard',
     component: Atomboard,
-  }
+  },
+  // 学生贡献度计算模块路由
+  {
+    path: '/course-management',
+    name: 'CourseManagement',
+    component: () => import('../views/CourseManagement.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/evaluation-config',
+    name: 'EvaluationConfig',
+    component: () => import('../views/EvaluationConfig.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/data-collection',
+    name: 'DataCollection',
+    component: () => import('../views/DataCollection.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/score-calculation',
+    name: 'ScoreCalculation',
+    component: () => import('../views/ScoreCalculation.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/result-display',
+    name: 'ResultDisplay',
+    component: () => import('../views/ResultDisplay.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+      path: '/system-settings',
+      name: 'SystemSettings',
+      component: () => import('@/views/SystemSettings.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/git-repository-management',
+      name: 'GitRepositoryManagement',
+      component: () => import('@/views/GitRepositoryManagement.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/git-activity-monitor',
+      name: 'GitActivityMonitor',
+      component: () => import('@/views/GitActivityMonitor.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/member-git-profile/:memberId',
+      name: 'MemberGitProfile',
+      component: () => import('@/views/MemberGitProfile.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/contribution-analytics',
+      name: 'ContributionAnalytics',
+      component: () => import('@/views/ContributionAnalytics.vue'),
+      meta: { requiresAuth: true }
+    }
 ]
 
 const router = new VueRouter({
